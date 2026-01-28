@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Hanson He — Waterloo Engineering Student</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --ink: #0b0b0f;
+        --cream: #f6f2eb;
+        --mist: #d7d1c7;
+        --copper: #c98a4b;
+        --teal: #3e6f6c;
+        --shadow: rgba(10, 12, 18, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+        background: radial-gradient(circle at 15% 20%, #2d3b47 0%, #1b242d 30%, #0f141a 70%, #0b0b0f 100%);
+        color: var(--cream);
+        min-height: 100vh;
+      }
+
+      .page {
+        position: relative;
+        min-height: 100vh;
+        padding: 4rem clamp(1.5rem, 4vw, 4.5rem);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 3rem;
+        overflow: hidden;
+      }
+
+      .page::before,
+      .page::after {
+        content: "";
+        position: absolute;
+        inset: auto auto 10% 10%;
+        width: 40vw;
+        max-width: 420px;
+        height: 40vw;
+        max-height: 420px;
+        background: radial-gradient(circle at 30% 30%, rgba(201, 138, 75, 0.35), transparent 70%);
+        filter: blur(10px);
+        opacity: 0.8;
+        pointer-events: none;
+      }
+
+      .page::after {
+        inset: 5% 8% auto auto;
+        background: radial-gradient(circle at 70% 30%, rgba(62, 111, 108, 0.35), transparent 70%);
+      }
+
+      header {
+        display: grid;
+        gap: 1.25rem;
+        max-width: 760px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        border: 1px solid rgba(246, 242, 235, 0.2);
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        background: rgba(11, 11, 15, 0.4);
+        width: fit-content;
+      }
+
+      h1 {
+        font-family: "Fraunces", "Times New Roman", serif;
+        font-size: clamp(2.4rem, 6vw, 4.6rem);
+        line-height: 1.05;
+        margin: 0;
+        color: var(--cream);
+        text-shadow: 0 18px 40px var(--shadow);
+      }
+
+      .tagline {
+        font-size: clamp(1.1rem, 2.3vw, 1.45rem);
+        color: var(--mist);
+        max-width: 680px;
+      }
+
+      .cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+      }
+
+      .cta a {
+        text-decoration: none;
+        color: var(--ink);
+        background: var(--cream);
+        padding: 0.6rem 1.1rem;
+        border-radius: 999px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .cta a.secondary {
+        background: rgba(246, 242, 235, 0.1);
+        color: var(--cream);
+        border: 1px solid rgba(246, 242, 235, 0.3);
+      }
+
+      .cta a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+      }
+
+      .grid {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        position: relative;
+        z-index: 1;
+      }
+
+      .card {
+        background: rgba(11, 11, 15, 0.65);
+        border-radius: 1.25rem;
+        padding: 1.4rem 1.5rem;
+        border: 1px solid rgba(246, 242, 235, 0.12);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(10px);
+      }
+
+      .card h2 {
+        margin: 0 0 0.75rem;
+        font-size: 1.05rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--copper);
+      }
+
+      .card p,
+      .card li {
+        margin: 0;
+        color: var(--mist);
+        line-height: 1.6;
+        font-size: 0.96rem;
+      }
+
+      .card ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 0.5rem;
+      }
+
+      footer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        color: rgba(246, 242, 235, 0.6);
+        font-size: 0.85rem;
+        position: relative;
+        z-index: 1;
+      }
+
+      @media (max-width: 720px) {
+        .page {
+          padding-top: 3.2rem;
+        }
+
+        .cta a {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header>
+        <span class="badge">Waterloo Engineering · BASc (Co-op)</span>
+        <h1>Shengyuan (Hanson) He</h1>
+        <p class="tagline">
+          Electrical Engineering student at the University of Waterloo. Focused on embedded systems,
+          data-driven sustainability, and AI-assisted development.
+        </p>
+        <div class="cta">
+          <a href="mailto:s296he@uwaterloo.ca">s296he@uwaterloo.ca</a>
+          <a class="secondary" href="https://www.linkedin.com/in/shengyuan-he" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a class="secondary" href="https://github.com/HansonHe-UW" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="secondary" href="tel:+14373855777">+1&nbsp;437&nbsp;385&nbsp;5777</a>
+        </div>
+      </header>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Skills</h2>
+          <ul>
+            <li><strong>Languages:</strong> C (Embedded), C++, Python, MATLAB</li>
+            <li><strong>Hardware & Protocols:</strong> Raspberry Pi Pico, Arduino</li>
+            <li><strong>Tools:</strong> Git, Visual Studio Code, Linux, LaTeX</li>
+            <li><strong>Analysis:</strong> MATLAB, Python, LTspice, Multisim</li>
+            <li><strong>Other:</strong> AI-assisted dev tools (e.g., GitHub Copilot)</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>About</h2>
+          <p>
+            Based in Waterloo, ON. Interested in building practical electrical systems and applying
+            simulation + data analysis to real-world sustainability challenges.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>Projects</h2>
+          <p>
+            Urban Sprawl Research (iBASE, UW) · Environmental advocacy work · Peer study initiatives.
+            More project details coming soon.
+          </p>
+        </article>
+      </section>
+
+      <footer>
+        <span>© 2026 Hanson He · hansonhe.ca</span>
+        <span>Waterloo, Ontario, Canada</span>
+      </footer>
+    </main>
+  </body>
+</html>
