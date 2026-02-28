@@ -1,16 +1,45 @@
-# React + Vite
+# Hanson (Shengyuan) He - Personal Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the repository for my personal portfolio website.
 
-Currently, two official plugins are available:
+## 🚀 Live Demo
+[https://hansonhe.ca/](https://hansonhe.ca/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
+This website was built using a modern frontend stack to ensure performance, responsiveness, and fluid animations.
+- **Framework**: React 19 (via Vite)
+- **Styling**: Contextual pure CSS with CSS Variables for a consistent design system (`App.css`, `index.css`)
+- **Animation**: Framer Motion (for staggered fades, scroll reveals, and interactive hover states)
+- **Deployment**: GitHub Actions -> GitHub Pages
 
-## React Compiler
+## ✨ Features
+- **Dynamic Typewriter Hero**: Cycles through core engineering scopes (Embedded Systems, Full-Stack Software, Intelligent Systems).
+- **Smooth Scroll-Spy Navigation**: The top navigation bar dynamically highlights the current active section (using precise pixel-offset calculation) as you scroll down the page.
+- **Bento-style Skills Grid**: Clean, grid-based categorization of technologies ranging from Hardware (I2C, SPI, RTOS) to Cloud/Web architectures (React, AWS, Node.js).
+- **Responsive Layout**: Adapts perfectly to mobile viewports (iPhone X layout).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Local Development
 
-## Expanding the ESLint configuration
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/HansonHe-UW/HansonHe-UW.github.io.git
+   cd HansonHe-UW.github.io
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Build for production:**
+   ```bash
+   npm run build
+   ```
+
+## 📄 License
+This portfolio design and code are open-sourced under the MIT License. Feel free to use the structure for your own inspiration!
