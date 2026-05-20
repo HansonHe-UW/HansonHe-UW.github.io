@@ -290,7 +290,7 @@ section {
 
 .project-image-container {
   width: 100%;
-  height: 220px;
+  height: 170px;
   overflow: hidden;
   border-bottom: 1px solid var(--border-color);
   background: #000;
@@ -299,7 +299,7 @@ section {
 .project-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 0.5s ease;
 }
 
@@ -452,6 +452,35 @@ section {
 
 .experience-card:hover {
   border-left-color: var(--accent);
+}
+
+.experience-card-with-logo {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.experience-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px;
+  border: 1px solid var(--border-color);
+  flex-shrink: 0;
+  transition: all var(--transition);
+}
+
+.experience-logo:hover {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.experience-body {
+  flex: 1;
+  min-width: 0;
 }
 
 .experience-header {
@@ -670,7 +699,7 @@ section {
   }
 
   .project-image-container {
-    height: 160px;
+    height: 130px;
     /* Shorter cover images on mobile */
   }
 

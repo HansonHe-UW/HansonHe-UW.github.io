@@ -38,7 +38,7 @@ export default function Nav() {
                     H.
                 </span>
                 <ul className="nav-links">
-                    {['about', 'skills', 'projects', 'experience', 'education', 'awards'].map((s) => (
+                    {['about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards'].map((s) => (
                         <li key={s}>
                             <a
                                 href={`#${s}`}

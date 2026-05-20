@@ -20,7 +20,7 @@ export default function Education() {
                                 <div className="education-degree">BASc, Honours Electrical Engineering, Co-op</div>
                             </div>
                         </div>
-                        <span className="education-date">Expected Apr 2030</span>
+                        <span className="education-date">Sep 2026 — Apr 2031</span>
                     </div>
 
                     <div className="education-entry">

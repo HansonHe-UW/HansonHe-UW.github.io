@@ -18,6 +18,12 @@ const ExternalLinkIcon = () => (
     </svg>
 )
 
+const YouTubeIcon = () => (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+    </svg>
+)
+
 const projects = [
     {
         title: 'SpatialVCS',
@@ -38,6 +44,26 @@ const projects = [
             'Shipped an end-to-end demo (frontend + backend + realtime streaming) and debugged live connectivity issues under time pressure during judging',
         ],
         tech: ['Python', 'FastAPI', 'YOLOv8', 'Google Gemini API', 'ChromaDB', 'React 19', 'Three.js', 'SSL/TLS'],
+    },
+    {
+        title: 'Wildfire Tactics',
+        subtitle: 'Multi-Agent Wildfire Evacuation Simulator',
+        date: 'Jan 2026 — Feb 2026',
+        image: '/projects/wildfire.png',
+        award: 'Hack Canada 2026 — Team of 4',
+        links: [
+            { icon: <YouTubeIcon />, href: 'https://www.youtube.com/watch?v=LIxPtAoWjEI', label: 'Demo Video' },
+            { icon: <GitHubIcon />, href: 'https://github.com/TonyXie652/Wilfire-Tactics-Frontend', label: 'GitHub' },
+        ],
+        highlights: [
+            'Built a real-time wildfire evacuation simulator in TypeScript/React on top of Deck.gl + Mapbox, modeling fire spread, road-constrained routing, and the interaction between resident agents and AI-guided rescue agents on real city geometry',
+            'Designed a cellular-automata-style fire propagation model where intensity diffuses through a grid with wind, fuel, and decay parameters, and projected back onto road segments to drive threat-aware path costs',
+            'Implemented a shared flow-field routing system (single Dijkstra rollout from safe points) so hundreds of resident agents could re-plan continuously as roadblocks and fire fronts changed, instead of each agent running its own pathfinding',
+            'Integrated LLM-based guide agents using function calling: the model receives a compressed view of live simulation state (nearby agents, fire intensity, candidate safe points) and decides where to lead its group, with results streamed back into the simulation loop',
+            'Hardened the client for a hackathon demo by routing all LLM calls through a Vite dev-server proxy to keep API keys off the browser, and tuned simulation tick rate / agent batching to keep the map responsive at ~60fps with hundreds of agents on screen',
+            'Shipped a polished demo with adjustable parameters (wind, ignition points, agent count) so judges could play with scenarios live during judging',
+        ],
+        tech: ['TypeScript', 'React', 'Deck.gl', 'Mapbox', 'LLM Function Calling', 'Vite'],
     },
     {
         title: 'CareerForge-AI',
@@ -95,7 +121,7 @@ export default function Projects() {
                             <div>
                                 <div className="project-title-row">
                                     <div className="project-title">{p.title}</div>
-                                    {p.links && (
+                                    {p.links && p.links.length > 0 && (
                                         <div className="project-links">
                                             {p.links.map((link, k) => (
                                                 <a

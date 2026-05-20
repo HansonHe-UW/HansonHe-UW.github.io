@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
 
 const skillData = [
-    { label: 'Programming', items: ['Python', 'C/C++', 'JavaScript', 'TypeScript', 'Java', 'Rust', 'MATLAB'] },
-    { label: 'Web & Mobile', items: ['React', 'Next.js', 'Node.js', 'Express', 'React Native', 'Tailwind'] },
-    { label: 'Cloud & APIs', items: ['Firebase', 'REST APIs', 'GraphQL', 'AWS', 'WebSockets', 'Postman'] },
-    { label: 'Hard. & Systems', items: ['Raspberry Pi Pico', 'Arduino', 'RTOS', 'FPGA', 'I²C / SPI / UART'] },
-    { label: 'Tools & DevOps', items: ['Git/GitHub', 'Linux (Bash)', 'Docker', 'CI/CD', 'ROS / ROS2', 'KiCad'] },
-    { label: 'Data & AI', items: ['NumPy', 'Pandas', 'PyTorch', 'Computer Vision / YOLO', 'LTspice', 'LLMs'] },
+    { label: 'Embedded & Hardware', items: ['Arduino', 'Embedded C', 'Multimeter', 'Oscilloscope'] },
+    { label: 'Programming', items: ['Python', 'C/C++', 'JavaScript', 'TypeScript', 'SQL'] },
+    { label: 'AI / Data & CV', items: ['Gemini API', 'sentence-transformers', 'ChromaDB', 'OpenCV', 'YOLOv8'] },
+    { label: 'Web & Backend', items: ['FastAPI', 'REST APIs', 'WebSockets', 'Node.js'] },
+    { label: 'Frontend', items: ['React', 'Vite', 'Tailwind CSS', 'HTML/CSS'] },
+    { label: 'Tools & Systems', items: ['Git', 'Linux/Unix', 'Bash/Shell', 'Firebase', 'AWS'] },
 ]
 
 const container = {
