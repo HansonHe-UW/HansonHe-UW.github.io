@@ -29,7 +29,7 @@ const projects = [
         title: 'SpatialVCS',
         subtitle: 'Full-Stack AI Spatial Computing System',
         date: 'February 2026',
-        image: '/projects/spatialvcs.png',
+        image: '/projects/spatialvcs-icon.png',
         award: '🏆 Best Beginner Hack — CTRL+HACK+DEL 2.0',
         links: [
             { icon: <DevpostIcon />, href: 'https://devpost.com/software/spatialvcs', label: 'Devpost' },
@@ -69,7 +69,7 @@ const projects = [
         title: 'CareerForge-AI',
         subtitle: 'Full-Stack AI Resume Platform',
         date: 'Dec 2025 — Jan 2026',
-        image: '/projects/careerforge.png',
+        image: '/projects/careerforge-icon.png',
         links: [
             { icon: <GitHubIcon />, href: 'https://github.com/JSZ-Research/CareerForge-AI', label: 'GitHub' },
         ],
@@ -112,49 +112,51 @@ export default function Projects() {
                         whileInView="visible"
                         viewport={{ once: true, margin: '-60px' }}
                     >
-                        {p.image && (
-                            <div className="project-image-container">
-                                <img src={p.image} alt={`${p.title} cover`} className="project-image" />
-                            </div>
-                        )}
-                        <div className="project-header">
-                            <div>
-                                <div className="project-title-row">
-                                    <div className="project-title">{p.title}</div>
-                                    {p.links && p.links.length > 0 && (
-                                        <div className="project-links">
-                                            {p.links.map((link, k) => (
-                                                <a
-                                                    key={k}
-                                                    href={link.href}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="project-link-icon"
-                                                    title={link.label}
-                                                >
-                                                    {link.icon}
-                                                </a>
-                                            ))}
-                                        </div>
+                        <div className="project-body">
+                            <div className="project-header">
+                                <div className="project-header-main">
+                                    {p.image && (
+                                        <img src={p.image} alt={`${p.title} thumbnail`} className="project-thumb" />
                                     )}
+                                    <div className="project-header-text">
+                                        <div className="project-title-row">
+                                            <div className="project-title">{p.title}</div>
+                                            {p.links && p.links.length > 0 && (
+                                                <div className="project-links">
+                                                    {p.links.map((link, k) => (
+                                                        <a
+                                                            key={k}
+                                                            href={link.href}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="project-link-icon"
+                                                            title={link.label}
+                                                        >
+                                                            {link.icon}
+                                                        </a>
+                                                    ))}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="project-subtitle">{p.subtitle}</div>
+                                    </div>
                                 </div>
-                                <div className="project-subtitle">{p.subtitle}</div>
+                                <span className="project-date">{p.date}</span>
                             </div>
-                            <span className="project-date">{p.date}</span>
-                        </div>
 
-                        {p.award && <div className="project-award">{p.award}</div>}
+                            {p.award && <div className="project-award">{p.award}</div>}
 
-                        <ul className="project-highlights">
-                            {p.highlights.map((h, j) => (
-                                <li key={j}>{h}</li>
-                            ))}
-                        </ul>
+                            <ul className="project-highlights">
+                                {p.highlights.map((h, j) => (
+                                    <li key={j}>{h}</li>
+                                ))}
+                            </ul>
 
-                        <div className="project-tech">
-                            {p.tech.map((t) => (
-                                <span key={t}>{t}</span>
-                            ))}
+                            <div className="project-tech">
+                                {p.tech.map((t) => (
+                                    <span key={t}>{t}</span>
+                                ))}
+                            </div>
                         </div>
                     </motion.div>
                 ))}

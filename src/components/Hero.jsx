@@ -25,8 +25,15 @@ const PhoneIcon = () => (
     </svg>
 )
 
+const DownloadIcon = () => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
+    </svg>
+)
+
+const roles = ['Embedded Systems', 'Full-Stack Software', 'Intelligent Systems']
+
 export default function Hero() {
-    const roles = ['Embedded Systems', 'Full-Stack Software', 'Intelligent Systems']
     const [currentRole, setCurrentRole] = useState('')
     const [isDeleting, setIsDeleting] = useState(false)
     const [loopNum, setLoopNum] = useState(0)
@@ -55,7 +62,7 @@ export default function Hero() {
         }, typingSpeed)
 
         return () => clearTimeout(timer)
-    }, [currentRole, isDeleting, loopNum, typingSpeed, roles])
+    }, [currentRole, isDeleting, loopNum, typingSpeed])
 
     const container = {
         hidden: {},
@@ -91,6 +98,17 @@ export default function Hero() {
                 <motion.p className="hero-tagline" variants={item}>
                     Electrical Engineering student at the University of Waterloo.
                 </motion.p>
+                <motion.div className="hero-cta" variants={item}>
+                    <motion.a
+                        className="hero-resume-btn"
+                        href="/resume-Hanson.pdf"
+                        download="Hanson-He-Resume.pdf"
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 0.97 }}
+                    >
+                        <DownloadIcon /> Download Resume
+                    </motion.a>
+                </motion.div>
                 <motion.div className="hero-links" variants={item}>
                     <motion.a className="hero-link" href="mailto:s296he@uwaterloo.ca" variants={linkItem} whileHover={{ y: -2 }}>
                         <MailIcon /> s296he@uwaterloo.ca

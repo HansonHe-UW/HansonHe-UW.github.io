@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import ThemeToggle from './ThemeToggle'
 
 export default function Nav() {
     const [scrolled, setScrolled] = useState(false)
@@ -37,19 +38,22 @@ export default function Nav() {
                 <span className="nav-logo" onClick={() => scrollTo('hero')} style={{ cursor: 'pointer' }}>
                     H.
                 </span>
-                <ul className="nav-links">
-                    {['about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards'].map((s) => (
-                        <li key={s}>
-                            <a
-                                href={`#${s}`}
-                                className={activeSection === s ? 'active' : ''}
-                                onClick={(e) => { e.preventDefault(); scrollTo(s) }}
-                            >
-                                {s.charAt(0).toUpperCase() + s.slice(1)}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
+                <div className="nav-right">
+                    <ul className="nav-links">
+                        {['about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards'].map((s) => (
+                            <li key={s}>
+                                <a
+                                    href={`#${s}`}
+                                    className={activeSection === s ? 'active' : ''}
+                                    onClick={(e) => { e.preventDefault(); scrollTo(s) }}
+                                >
+                                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                    <ThemeToggle />
+                </div>
             </div>
         </nav>
     )

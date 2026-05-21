@@ -10,7 +10,7 @@
 }
 
 .nav.scrolled {
-  background: rgba(15, 17, 23, 0.8);
+  background: var(--nav-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   box-shadow: 0 1px 0 var(--border-color);
@@ -32,10 +32,42 @@
   letter-spacing: -0.02em;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
 .nav-links {
   display: flex;
   gap: 2rem;
   list-style: none;
+}
+
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  padding: 0;
+}
+
+.theme-toggle svg {
+  width: 15px;
+  height: 15px;
+}
+
+.theme-toggle:hover {
+  color: var(--text-primary);
+  border-color: var(--border-hover);
+  background: var(--logo-bg);
 }
 
 .nav-links a {
@@ -168,7 +200,40 @@ section {
   color: var(--text-secondary);
   max-width: 520px;
   line-height: 1.6;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
+}
+
+.hero-cta {
+  margin-bottom: 1.5rem;
+}
+
+.hero-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: 1px solid var(--accent);
+  box-shadow: 0 4px 16px var(--accent-glow);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+
+.hero-resume-btn:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+  color: #fff;
+  box-shadow: 0 6px 20px var(--accent-glow);
+}
+
+.hero-resume-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
 }
 
 .hero-links {
@@ -272,7 +337,7 @@ section {
   background: var(--bg-card);
   transition: all var(--transition);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -284,23 +349,13 @@ section {
   box-shadow: 0 8px 30px rgba(99, 102, 241, 0.1);
 }
 
-.project-card:hover .project-image {
-  transform: scale(1.03);
+.project-card:hover .project-thumb {
+  transform: scale(1.05);
 }
 
-.project-image-container {
-  width: 100%;
-  height: 170px;
-  overflow: hidden;
-  border-bottom: 1px solid var(--border-color);
-  background: #000;
-}
-
-.project-image {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  transition: transform 0.5s ease;
+.project-body {
+  display: flex;
+  flex-direction: column;
 }
 
 .project-header,
@@ -308,23 +363,44 @@ section {
 .project-description,
 .project-highlights,
 .project-tech {
-  padding: 0 1.5rem;
+  padding: 0;
 }
 
 .project-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   gap: 1rem;
+}
+
+.project-header-main {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.project-thumb {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  object-fit: cover;
+  transition: transform var(--transition);
+}
+
+.project-header-text {
+  min-width: 0;
+  flex: 1;
 }
 
 .project-tech {
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;
-  padding-bottom: 1.5rem;
+  margin-top: 0.25rem;
 }
 
 .project-title {
@@ -465,7 +541,7 @@ section {
   height: 52px;
   border-radius: 10px;
   object-fit: contain;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--logo-bg);
   padding: 6px;
   border: 1px solid var(--border-color);
   flex-shrink: 0;
@@ -474,7 +550,7 @@ section {
 
 .experience-logo:hover {
   border-color: var(--accent);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--logo-bg-hover);
   transform: scale(1.05);
 }
 
@@ -556,7 +632,7 @@ section {
   height: 52px;
   border-radius: 10px;
   object-fit: contain;
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--logo-bg);
   padding: 6px;
   border: 1px solid var(--border-color);
   flex-shrink: 0;
@@ -565,7 +641,7 @@ section {
 
 .education-logo:hover {
   border-color: var(--accent);
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--logo-bg-hover);
   transform: scale(1.05);
 }
 
@@ -698,9 +774,13 @@ section {
     gap: 0.5rem;
   }
 
-  .project-image-container {
-    height: 130px;
-    /* Shorter cover images on mobile */
+  .project-card {
+    padding: 1.25rem;
+  }
+
+  .project-thumb {
+    width: 48px;
+    height: 48px;
   }
 
   .project-links {
