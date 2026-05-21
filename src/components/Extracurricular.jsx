@@ -36,7 +36,8 @@ export default function Extracurricular() {
                             UW Computer Science Club — University of Waterloo
                         </p>
                         <ul className="experience-highlights">
-                            <li>Coordinating club events and member engagement activities (details coming soon)</li>
+                            <li>Organize termly events across technical (workshops, Code Parties, industry talks) and community (trivia nights, picnics) streams for UW CS undergraduates</li>
+                            <li>Coordinate logistics, speaker/sponsor outreach, and cross-channel promotion (Discord, LinkedIn) for events drawing 50+ attendees</li>
                         </ul>
                     </div>
                 </motion.div>
