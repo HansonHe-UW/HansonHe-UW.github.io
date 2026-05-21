@@ -9,6 +9,24 @@
     content="Shengyuan (Hanson) He — Electrical Engineering student at the University of Waterloo. Focused on embedded systems, AI, and full-stack development." />
   <meta property="og:title" content="Hanson He" />
   <meta property="og:description" content="Electrical Engineering @ University of Waterloo" />
+  <script>
+    (() => {
+      try {
+        const storedTheme = localStorage.getItem('theme');
+        const theme = storedTheme === 'light' || storedTheme === 'dark'
+          ? storedTheme
+          : (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+
+        if (theme === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+        }
+      } catch {
+        document.documentElement.removeAttribute('data-theme');
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">

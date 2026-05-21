@@ -1,5 +1,6 @@
 /* ===== CSS Reset & Variables ===== */
 :root {
+  color-scheme: dark;
   --bg-primary: #0f1117;
   --bg-secondary: #141820;
   --bg-card: #171c26;
@@ -26,6 +27,7 @@
 }
 
 :root[data-theme="light"] {
+  color-scheme: light;
   --bg-primary: #fafbfc;
   --bg-secondary: #f1f5f9;
   --bg-card: #ffffff;

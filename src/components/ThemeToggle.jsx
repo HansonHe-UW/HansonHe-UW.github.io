@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 
 const SunIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -13,22 +13,62 @@ const MoonIcon = () => (
     </svg>
 )
 
-export default function ThemeToggle() {
-    const [theme, setTheme] = useState(() => {
-        if (typeof window === 'undefined') return 'dark'
-        return localStorage.getItem('theme') || 'dark'
-    })
+const THEME_STORAGE_KEY = 'theme'
+const THEMES = new Set(['light', 'dark'])
 
-    useEffect(() => {
-        if (theme === 'light') {
-            document.documentElement.setAttribute('data-theme', 'light')
-        } else {
-            document.documentElement.removeAttribute('data-theme')
-        }
-        localStorage.setItem('theme', theme)
+const getSystemTheme = () => {
+    if (typeof window === 'undefined') return 'dark'
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+}
+
+const getStoredTheme = () => {
+    try {
+        const storedTheme = localStorage.getItem(THEME_STORAGE_KEY)
+        return THEMES.has(storedTheme) ? storedTheme : null
+    } catch {
+        return null
+    }
+}
+
+const applyTheme = (theme) => {
+    if (theme === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light')
+    } else {
+        document.documentElement.removeAttribute('data-theme')
+    }
+}
+
+export default function ThemeToggle() {
+    const [storedTheme, setStoredTheme] = useState(getStoredTheme)
+    const [systemTheme, setSystemTheme] = useState(getSystemTheme)
+    const theme = storedTheme || systemTheme
+
+    useLayoutEffect(() => {
+        applyTheme(theme)
     }, [theme])
 
-    const toggle = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'))
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: light)')
+        const handleChange = () => setSystemTheme(getSystemTheme())
+
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', handleChange)
+            return () => mediaQuery.removeEventListener('change', handleChange)
+        }
+
+        mediaQuery.addListener(handleChange)
+        return () => mediaQuery.removeListener(handleChange)
+    }, [])
+
+    const toggle = () => {
+        const nextTheme = theme === 'light' ? 'dark' : 'light'
+        setStoredTheme(nextTheme)
+        try {
+            localStorage.setItem(THEME_STORAGE_KEY, nextTheme)
+        } catch {
+            // Ignore storage failures; the current DOM state is still correct.
+        }
+    }
 
     return (
         <button
