@@ -23,23 +23,30 @@ export default function Nav() {
     const [activeSection, setActiveSection] = useState('')
 
     useEffect(() => {
+        const ids = ['hero', 'about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards', 'contact']
+
         const handleScroll = () => {
             setScrolled(window.scrollY > 20)
 
-            const sections = ['hero', 'about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards', 'contact']
-            const scrollPosition = window.scrollY + window.innerHeight / 3 // Check what's in the top 1/3 of screen
+            const threshold = window.innerHeight * 0.3
+            let activeId = ids[0]
 
-            for (const section of sections.reverse()) { // Check bottom-up
-                const el = document.getElementById(section)
-                if (el && el.offsetTop <= scrollPosition) {
-                    setActiveSection(section)
+            for (const id of ids) {
+                const el = document.getElementById(id)
+                if (!el) continue
+                const top = el.getBoundingClientRect().top
+                if (top <= threshold) {
+                    activeId = id
+                } else {
                     break
                 }
             }
+
+            setActiveSection(activeId)
         }
 
-        window.addEventListener('scroll', handleScroll)
-        handleScroll() // Init on load
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        handleScroll()
 
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
