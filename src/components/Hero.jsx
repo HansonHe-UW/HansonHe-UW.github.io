@@ -25,6 +25,20 @@ const DownloadIcon = () => (
     </svg>
 )
 
+const HeroWatermark = () => (
+    <svg
+        className="hero-watermark"
+        viewBox="0 0 256 256"
+        aria-hidden="true"
+        focusable="false"
+    >
+        <g fontFamily="'Fraunces', Georgia, serif" fontWeight="500">
+            <text x="108" y="172" fontSize="124" fill="none" stroke="currentColor" strokeWidth="1.2" paintOrder="stroke fill">H</text>
+            <text x="48" y="172" fontSize="124" fill="currentColor">S</text>
+        </g>
+    </svg>
+)
+
 const roles = ['Embedded Systems', 'Full-Stack Apps', 'Side Projects']
 
 export default function Hero() {
@@ -100,12 +114,16 @@ export default function Hero() {
     return (
         <section className="hero" id="hero" ref={heroRef}>
             <div className="hero-glow-bg"></div>
+            <HeroWatermark />
             <motion.div
                 variants={container}
                 initial="hidden"
                 animate="visible"
                 style={{ position: 'relative', zIndex: 1 }}
             >
+                <motion.div className="hero-index" variants={item}>
+                    S/00 <span className="hero-index-arrow">▸</span> INDEX
+                </motion.div>
                 <motion.p className="hero-greeting" variants={item}>Hi, I'm</motion.p>
                 <motion.h1 className="hero-name" variants={item}>
                     Shengyuan <span className="accent">(Hanson)</span> He
@@ -124,7 +142,7 @@ export default function Hero() {
                         whileHover={{ y: -2 }}
                         whileTap={{ scale: 0.97 }}
                     >
-                        <DownloadIcon /> Download Resume
+                        <DownloadIcon /> Resume
                     </motion.a>
                     <motion.a
                         className="hero-icon-btn"
