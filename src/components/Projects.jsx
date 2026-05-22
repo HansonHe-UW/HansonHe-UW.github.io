@@ -48,7 +48,7 @@ const projects = [
     {
         title: 'Wildfire Tactics',
         subtitle: 'Multi-Agent Wildfire Evacuation Simulator',
-        date: 'Jan 2026 — Feb 2026',
+        date: 'Feb 2026',
         image: '/projects/wildfire.png',
         award: 'Hack Canada 2026 — Team of 4',
         links: [
@@ -70,6 +70,7 @@ const projects = [
         subtitle: 'Full-Stack AI Resume Platform',
         date: 'Dec 2025 — Jan 2026',
         image: '/projects/careerforge-icon.png',
+        award: 'Gemini 3 Hackathon — Team of 4',
         links: [
             { icon: <GitHubIcon />, href: 'https://github.com/JSZ-Research/CareerForge-AI', label: 'GitHub' },
         ],
