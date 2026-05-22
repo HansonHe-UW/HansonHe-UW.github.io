@@ -29,7 +29,7 @@ const projects = [
     {
         title: 'SpatialVCS',
         subtitle: 'Full-Stack AI Spatial Computing System',
-        date: 'February 2026',
+        date: 'Feb 2026',
         image: '/projects/spatialvcs-icon.png',
         award: '🏆 Best Beginner Hack — CTRL+HACK+DEL 2.0',
         links: [

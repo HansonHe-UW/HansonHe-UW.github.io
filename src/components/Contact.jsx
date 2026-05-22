@@ -34,7 +34,7 @@ const channels = [
     },
     {
         label: 'LINKEDIN',
-        value: 'shengyuan-he',
+        value: 'Hanson He',
         href: 'https://www.linkedin.com/in/shengyuan-he',
         icon: <LinkedInIcon />,
         external: true,
