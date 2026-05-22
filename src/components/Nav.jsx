@@ -23,7 +23,7 @@ export default function Nav() {
     const [activeSection, setActiveSection] = useState('')
 
     useEffect(() => {
-        const ids = ['hero', 'about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards', 'contact']
+        const ids = ['hero', 'about', 'education', 'skills', 'projects', 'experience', 'extracurricular', 'awards', 'contact']
 
         const handleScroll = () => {
             setScrolled(window.scrollY > 20)
@@ -64,7 +64,7 @@ export default function Nav() {
                 </button>
                 <div className="nav-right">
                     <ul className="nav-links">
-                        {['about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards', 'contact'].map((s) => (
+                        {['about', 'education', 'skills', 'projects', 'experience', 'extracurricular', 'awards', 'contact'].map((s) => (
                             <li key={s}>
                                 <a
                                     href={`#${s}`}
