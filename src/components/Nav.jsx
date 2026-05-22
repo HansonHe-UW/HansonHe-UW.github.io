@@ -9,7 +9,7 @@ export default function Nav() {
         const handleScroll = () => {
             setScrolled(window.scrollY > 20)
 
-            const sections = ['hero', 'about', 'skills', 'projects', 'experience', 'education', 'awards']
+            const sections = ['hero', 'about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards']
             const scrollPosition = window.scrollY + window.innerHeight / 3 // Check what's in the top 1/3 of screen
 
             for (const section of sections.reverse()) { // Check bottom-up
@@ -35,9 +35,9 @@ export default function Nav() {
     return (
         <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
             <div className="nav-inner">
-                <span className="nav-logo" onClick={() => scrollTo('hero')} style={{ cursor: 'pointer' }}>
+                <button type="button" className="nav-logo" onClick={() => scrollTo('hero')} aria-label="Scroll to top">
                     H.
-                </span>
+                </button>
                 <div className="nav-right">
                     <ul className="nav-links">
                         {['about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards'].map((s) => (

@@ -40,7 +40,8 @@ export default function Hero() {
     const [typingSpeed, setTypingSpeed] = useState(150)
 
     useEffect(() => {
-        let timer = setTimeout(() => {
+        let pauseTimer
+        const timer = setTimeout(() => {
             const i = loopNum % roles.length
             const fullText = roles[i]
 
@@ -53,7 +54,7 @@ export default function Hero() {
             setTypingSpeed(isDeleting ? 50 : 150)
 
             if (!isDeleting && currentRole === fullText) {
-                setTimeout(() => setIsDeleting(true), 1500)
+                pauseTimer = setTimeout(() => setIsDeleting(true), 1500)
             } else if (isDeleting && currentRole === '') {
                 setIsDeleting(false)
                 setLoopNum(loopNum + 1)
@@ -61,7 +62,10 @@ export default function Hero() {
             }
         }, typingSpeed)
 
-        return () => clearTimeout(timer)
+        return () => {
+            clearTimeout(timer)
+            if (pauseTimer) clearTimeout(pauseTimer)
+        }
     }, [currentRole, isDeleting, loopNum, typingSpeed])
 
     const container = {

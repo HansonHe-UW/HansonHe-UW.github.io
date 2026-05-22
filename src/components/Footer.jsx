@@ -2,9 +2,7 @@ export default function Footer() {
     return (
         <footer className="footer">
             <div className="footer-stamp">
-                <span>BUILD/2026.05.21</span>
-                <span className="footer-stamp-dot">·</span>
-                <span>v3.0</span>
+                <span>BUILD/{import.meta.env.VITE_BUILD_DATE}</span>
                 <span className="footer-stamp-dot">·</span>
                 <span>WATERLOO_ON</span>
             </div>
