@@ -7,6 +7,7 @@ import Projects from './components/Projects'
 import Experience from './components/Experience'
 import Extracurricular from './components/Extracurricular'
 import Education from './components/Education'
+import Contact from './components/Contact'
 import Footer from './components/Footer'
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
                 <Experience />
                 <Extracurricular />
                 <Education />
+                <Contact />
                 <Footer />
             </div>
         </>

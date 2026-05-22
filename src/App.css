@@ -241,6 +241,10 @@ section {
 }
 
 .hero-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
   margin-bottom: 1.5rem;
 }
 
@@ -273,35 +277,133 @@ section {
   flex-shrink: 0;
 }
 
-.hero-links {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.hero-link {
+.hero-icon-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 1.1rem;
-  border: 1px solid var(--border-color);
+  justify-content: center;
+  width: 42px;
+  height: 42px;
   border-radius: 8px;
+  border: 1px solid var(--border-color);
   color: var(--text-secondary);
-  font-size: 0.85rem;
-  transition: all var(--transition);
   background: transparent;
+  transition: all var(--transition);
 }
 
-.hero-link:hover {
-  color: var(--text-primary);
-  border-color: var(--border-hover);
+.hero-icon-btn:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.hero-icon-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ===== Contact ===== */
+.contact-intro {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  max-width: 540px;
+  margin-bottom: 2.25rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
   background: var(--bg-card);
+  color: var(--text-primary);
+  position: relative;
+  transition: all var(--transition);
+  overflow: hidden;
 }
 
-.hero-link svg {
-  width: 16px;
-  height: 16px;
-  flex-shrink: 0;
+.contact-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent-glow), transparent 60%);
+  opacity: 0;
+  transition: opacity var(--transition);
+  pointer-events: none;
+}
+
+.contact-card:hover {
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.12);
+}
+
+.contact-card:hover::before {
+  opacity: 1;
+}
+
+.contact-card-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--accent-glow);
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+  transition: transform var(--transition);
+}
+
+.contact-card:hover .contact-card-icon {
+  transform: scale(1.08);
+}
+
+.contact-card-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.contact-card-label {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.contact-card-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+.contact-card-arrow {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  color: var(--text-muted);
+  transition: transform var(--transition), color var(--transition);
+}
+
+.contact-card-arrow svg {
+  width: 18px;
+  height: 18px;
+}
+
+.contact-card:hover .contact-card-arrow {
+  color: var(--accent);
+  transform: translate(3px, -3px);
 }
 
 /* ===== About ===== */
@@ -901,101 +1003,12 @@ section {
     /* Allow the prefix and dynamic text to stack if needed */
   }
 
-  .hero-resume-btn {
-    background: transparent;
-    color: var(--accent);
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    font-weight: 500;
-    padding: 0.6rem 1rem;
-    border-radius: 6px;
-    box-shadow: none;
-    letter-spacing: -0.01em;
+  .contact-grid {
+    grid-template-columns: 1fr;
   }
 
-  .hero-resume-btn:hover {
-    background: var(--accent-glow);
-    color: var(--accent);
-    box-shadow: none;
-  }
-
-  .hero-links {
-    flex-direction: column;
-    gap: 0;
-    margin-top: 0.5rem;
-    padding-top: 1.5rem;
-    position: relative;
-    counter-reset: link;
-  }
-
-  .hero-links::before {
-    content: "// CONNECT_BLOCK  \005B 04 \005D";
-    display: block;
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 0.4rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--hairline);
-  }
-
-  .hero-link {
-    display: grid;
-    grid-template-columns: 112px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 0.75rem;
-    border: none;
-    border-bottom: 1px solid var(--hairline);
-    border-left: 2px solid transparent;
-    border-radius: 0;
-    padding: 0.95rem 0.5rem;
-    background: transparent;
-    color: var(--text-primary);
-    font-size: 0.85rem;
-    overflow-wrap: anywhere;
-    counter-increment: link;
-    transition: all var(--transition);
-  }
-
-  .hero-link:hover {
-    background: var(--accent-glow);
-    border-left-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .hero-link svg {
-    display: none;
-  }
-
-  .hero-link::before {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-
-  .hero-link[href^="mailto"]::before { content: "0" counter(link) "  EMAIL"; }
-  .hero-link[href^="tel"]::before { content: "0" counter(link) "  PHONE"; }
-  .hero-link[href*="linkedin"]::before { content: "0" counter(link) "  LINKEDIN"; }
-  .hero-link[href*="github"]::before { content: "0" counter(link) "  GITHUB"; }
-
-  .hero-link::after {
-    content: "\2192";
-    font-family: var(--font-mono);
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    justify-self: end;
-    transition: transform var(--transition), color var(--transition);
-  }
-
-  .hero-link:hover::after {
-    transform: translateX(4px);
-    color: var(--accent);
+  .contact-card {
+    padding: 1.5rem 1.25rem;
   }
 
   .skill-category {

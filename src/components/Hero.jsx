@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 const MailIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -19,12 +19,6 @@ const GitHubIcon = () => (
     </svg>
 )
 
-const PhoneIcon = () => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-    </svg>
-)
-
 const DownloadIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" />
@@ -38,6 +32,31 @@ export default function Hero() {
     const [isDeleting, setIsDeleting] = useState(false)
     const [loopNum, setLoopNum] = useState(0)
     const [typingSpeed, setTypingSpeed] = useState(150)
+    const heroRef = useRef(null)
+
+    useEffect(() => {
+        const hero = heroRef.current
+        if (!hero) return
+
+        let ticking = false
+        const update = () => {
+            const progress = Math.min(1, window.scrollY / 700)
+            // Clamp to 55vh so hero content always has a home — avoids
+            // anchor weirdness when scroll-to-#hero lands on a collapsed section.
+            hero.style.minHeight = `${Math.max(55, (1 - progress) * 100)}vh`
+            ticking = false
+        }
+        const handler = () => {
+            if (!ticking) {
+                requestAnimationFrame(update)
+                ticking = true
+            }
+        }
+
+        update()
+        window.addEventListener('scroll', handler, { passive: true })
+        return () => window.removeEventListener('scroll', handler)
+    }, [])
 
     useEffect(() => {
         let pauseTimer
@@ -78,13 +97,8 @@ export default function Hero() {
         visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] } },
     }
 
-    const linkItem = {
-        hidden: { opacity: 0, y: 20, scale: 0.95 },
-        visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } },
-    }
-
     return (
-        <section className="hero" id="hero">
+        <section className="hero" id="hero" ref={heroRef}>
             <div className="hero-glow-bg"></div>
             <motion.div
                 variants={container}
@@ -112,19 +126,36 @@ export default function Hero() {
                     >
                         <DownloadIcon /> Download Resume
                     </motion.a>
-                </motion.div>
-                <motion.div className="hero-links" variants={item}>
-                    <motion.a className="hero-link" href="mailto:s296he@uwaterloo.ca" variants={linkItem} whileHover={{ y: -2 }}>
-                        <MailIcon /> s296he@uwaterloo.ca
+                    <motion.a
+                        className="hero-icon-btn"
+                        href="mailto:s296he@uwaterloo.ca"
+                        aria-label="Email"
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <MailIcon />
                     </motion.a>
-                    <motion.a className="hero-link" href="https://www.linkedin.com/in/shengyuan-he" target="_blank" rel="noopener noreferrer" variants={linkItem} whileHover={{ y: -2 }}>
-                        <LinkedInIcon /> LinkedIn
+                    <motion.a
+                        className="hero-icon-btn"
+                        href="https://www.linkedin.com/in/shengyuan-he"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn"
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <LinkedInIcon />
                     </motion.a>
-                    <motion.a className="hero-link" href="https://github.com/HansonHe-UW" target="_blank" rel="noopener noreferrer" variants={linkItem} whileHover={{ y: -2 }}>
-                        <GitHubIcon /> GitHub
-                    </motion.a>
-                    <motion.a className="hero-link" href="tel:+14373855777" variants={linkItem} whileHover={{ y: -2 }}>
-                        <PhoneIcon /> +1 437-385-5777
+                    <motion.a
+                        className="hero-icon-btn"
+                        href="https://github.com/HansonHe-UW"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="GitHub"
+                        whileHover={{ y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                        <GitHubIcon />
                     </motion.a>
                 </motion.div>
             </motion.div>

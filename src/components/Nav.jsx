@@ -26,7 +26,7 @@ export default function Nav() {
         const handleScroll = () => {
             setScrolled(window.scrollY > 20)
 
-            const sections = ['hero', 'about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards']
+            const sections = ['hero', 'about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards', 'contact']
             const scrollPosition = window.scrollY + window.innerHeight / 3 // Check what's in the top 1/3 of screen
 
             for (const section of sections.reverse()) { // Check bottom-up
@@ -57,7 +57,7 @@ export default function Nav() {
                 </button>
                 <div className="nav-right">
                     <ul className="nav-links">
-                        {['about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards'].map((s) => (
+                        {['about', 'skills', 'projects', 'experience', 'extracurricular', 'education', 'awards', 'contact'].map((s) => (
                             <li key={s}>
                                 <a
                                     href={`#${s}`}

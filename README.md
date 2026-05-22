@@ -1,12 +1,11 @@
-# Hanson (Shengyuan) He - Personal Website
+# hansonhe.ca
 
-Welcome to the source code repository for my personal portfolio website.
+Personal portfolio for Shengyuan (Hanson) He — Electrical Engineering co-op student at the University of Waterloo. Live at [hansonhe.ca](https://hansonhe.ca/).
 
-## 🚀 Live Site
-[https://hansonhe.ca/](https://hansonhe.ca/)
+## Stack
 
-## 🛠️ Built With
-- **React 19 & Vite**: Fast, modern frontend framework.
-- **Framer Motion**: Smooth scroll reveals and interactive animations.
-- **Vanilla CSS**: Custom styling with CSS variables and responsive design grids.
-- **Automated Deployment**: Custom GitHub Actions workflow to deploy directly to GitHub Pages.
+- React 19 + Vite 7
+- Framer Motion
+- Vanilla CSS with custom properties
+- JetBrains Mono + Inter via Google Fonts
+- Deployed to GitHub Pages via GitHub Actions
