@@ -25,7 +25,7 @@ const DownloadIcon = () => (
     </svg>
 )
 
-const roles = ['Embedded Systems', 'Full-Stack Software', 'Intelligent Systems']
+const roles = ['Embedded Systems', 'Full-Stack Apps', 'Side Projects']
 
 export default function Hero() {
     const [currentRole, setCurrentRole] = useState('')

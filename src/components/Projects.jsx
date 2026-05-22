@@ -33,6 +33,7 @@ const projects = [
         image: '/projects/spatialvcs-icon.png',
         award: '🏆 Best Beginner Hack — CTRL+HACK+DEL 2.0',
         links: [
+            { icon: <YouTubeIcon />, href: 'https://www.youtube.com/watch?v=SzejfdNxOt8', label: 'Demo Video' },
             { icon: <DevpostIcon />, href: 'https://devpost.com/software/spatialvcs', label: 'Devpost' },
             { icon: <GitHubIcon />, href: 'https://github.com/HansonHe-UW/SpatialVCS', label: 'GitHub' },
         ],
@@ -54,6 +55,7 @@ const projects = [
         award: 'Hack Canada 2026 — Team of 4',
         links: [
             { icon: <YouTubeIcon />, href: 'https://www.youtube.com/watch?v=LIxPtAoWjEI', label: 'Demo Video' },
+            { icon: <DevpostIcon />, href: 'https://devpost.com/software/wilfire-tactics-frontend', label: 'Devpost' },
             { icon: <GitHubIcon />, href: 'https://github.com/TonyXie652/Wilfire-Tactics-Frontend', label: 'GitHub' },
         ],
         highlights: [
@@ -73,6 +75,8 @@ const projects = [
         image: '/projects/careerforge-icon.png',
         award: 'Gemini 3 Hackathon — Team of 4',
         links: [
+            { icon: <YouTubeIcon />, href: 'https://www.youtube.com/watch?v=yqUrn0oUv18', label: 'Demo Video' },
+            { icon: <DevpostIcon />, href: 'https://devpost.com/software/geminicraft-professional-cover-letter-architect', label: 'Devpost' },
             { icon: <GitHubIcon />, href: 'https://github.com/JSZ-Research/CareerForge-AI', label: 'GitHub' },
         ],
         highlights: [
