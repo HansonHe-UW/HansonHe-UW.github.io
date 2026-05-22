@@ -1,6 +1,23 @@
 import { useState, useEffect } from 'react'
 import ThemeToggle from './ThemeToggle'
 
+const LogoMark = () => (
+    <svg
+        viewBox="0 0 256 256"
+        aria-hidden="true"
+        focusable="false"
+        className="nav-logo-img"
+    >
+        <g
+            fontFamily="'Nimbus Roman', 'Liberation Serif', 'Times New Roman', serif"
+            fontWeight="400"
+        >
+            <text x="108" y="172" fontSize="124" fill="none" stroke="currentColor" strokeWidth="2.2" paintOrder="stroke fill">H</text>
+            <text x="48" y="172" fontSize="124" fill="currentColor">S</text>
+        </g>
+    </svg>
+)
+
 export default function Nav() {
     const [scrolled, setScrolled] = useState(false)
     const [activeSection, setActiveSection] = useState('')
@@ -36,7 +53,7 @@ export default function Nav() {
         <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
             <div className="nav-inner">
                 <button type="button" className="nav-logo" onClick={() => scrollTo('hero')} aria-label="Scroll to top">
-                    H.
+                    <LogoMark />
                 </button>
                 <div className="nav-right">
                     <ul className="nav-links">

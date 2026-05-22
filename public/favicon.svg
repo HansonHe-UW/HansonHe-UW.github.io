@@ -1,3 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-  <text y="0.9em" font-size="80" font-family="sans-serif">H</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="SH monogram">
+  <style>
+    .h { fill: none; stroke: #202020; }
+    .s { fill: #202020; }
+    @media (prefers-color-scheme: dark) {
+      .h { stroke: #F4F4F1; }
+      .s { fill: #F4F4F1; }
+    }
+  </style>
+  <g font-family="'Nimbus Roman', 'Liberation Serif', 'Times New Roman', serif" font-weight="400">
+    <text class="h" x="108" y="172" font-size="124" stroke-width="4" paint-order="stroke fill">H</text>
+    <text class="s" x="48" y="172" font-size="124">S</text>
+  </g>
 </svg>
