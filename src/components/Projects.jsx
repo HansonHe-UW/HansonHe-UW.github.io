@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState } from 'react'
 
 const GitHubIcon = () => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -90,6 +91,96 @@ const cardVariant = {
     visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1] } },
 }
 
+function ProjectCard({ p }) {
+    const [expanded, setExpanded] = useState(false)
+    const bulletCount = String(p.highlights.length).padStart(2, '0')
+
+    return (
+        <motion.div
+            className={`project-card ${expanded ? 'is-expanded' : ''}`}
+            variants={cardVariant}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px' }}
+        >
+            <div className="project-body">
+                <div className="project-header">
+                    <div className="project-header-main">
+                        {p.image && (
+                            <img src={p.image} alt={`${p.title} thumbnail`} className="project-thumb" />
+                        )}
+                        <div className="project-header-text">
+                            <div className="project-title-row">
+                                <div className="project-title">{p.title}</div>
+                                {p.links && p.links.length > 0 && (
+                                    <div className="project-links">
+                                        {p.links.map((link, k) => (
+                                            <a
+                                                key={k}
+                                                href={link.href}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="project-link-icon"
+                                                title={link.label}
+                                            >
+                                                {link.icon}
+                                            </a>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="project-subtitle">{p.subtitle}</div>
+                        </div>
+                    </div>
+                    <span className="project-date">{p.date}</span>
+                </div>
+
+                {p.award && <div className="project-award">{p.award}</div>}
+
+                <AnimatePresence initial={false}>
+                    {expanded && (
+                        <motion.ul
+                            className="project-highlights project-highlights-collapsible"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+                            style={{ overflow: 'hidden' }}
+                        >
+                            {p.highlights.map((h, j) => (
+                                <li key={j}>{h}</li>
+                            ))}
+                        </motion.ul>
+                    )}
+                </AnimatePresence>
+
+                <ul className="project-highlights project-highlights-always">
+                    {p.highlights.map((h, j) => (
+                        <li key={j}>{h}</li>
+                    ))}
+                </ul>
+
+                <div className="project-tech">
+                    {p.tech.map((t) => (
+                        <span key={t}>{t}</span>
+                    ))}
+                </div>
+
+                <button
+                    type="button"
+                    className="project-expand-btn"
+                    onClick={() => setExpanded((v) => !v)}
+                    aria-expanded={expanded}
+                >
+                    {expanded
+                        ? `▴ COLLAPSE`
+                        : `▾ EXPAND_DETAILS [${bulletCount}]`}
+                </button>
+            </div>
+        </motion.div>
+    )
+}
+
 export default function Projects() {
     return (
         <section id="projects">
@@ -105,61 +196,7 @@ export default function Projects() {
 
             <div className="projects-list">
                 {projects.map((p, i) => (
-                    <motion.div
-                        className="project-card"
-                        key={i}
-                        variants={cardVariant}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, margin: '-60px' }}
-                    >
-                        <div className="project-body">
-                            <div className="project-header">
-                                <div className="project-header-main">
-                                    {p.image && (
-                                        <img src={p.image} alt={`${p.title} thumbnail`} className="project-thumb" />
-                                    )}
-                                    <div className="project-header-text">
-                                        <div className="project-title-row">
-                                            <div className="project-title">{p.title}</div>
-                                            {p.links && p.links.length > 0 && (
-                                                <div className="project-links">
-                                                    {p.links.map((link, k) => (
-                                                        <a
-                                                            key={k}
-                                                            href={link.href}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="project-link-icon"
-                                                            title={link.label}
-                                                        >
-                                                            {link.icon}
-                                                        </a>
-                                                    ))}
-                                                </div>
-                                            )}
-                                        </div>
-                                        <div className="project-subtitle">{p.subtitle}</div>
-                                    </div>
-                                </div>
-                                <span className="project-date">{p.date}</span>
-                            </div>
-
-                            {p.award && <div className="project-award">{p.award}</div>}
-
-                            <ul className="project-highlights">
-                                {p.highlights.map((h, j) => (
-                                    <li key={j}>{h}</li>
-                                ))}
-                            </ul>
-
-                            <div className="project-tech">
-                                {p.tech.map((t) => (
-                                    <span key={t}>{t}</span>
-                                ))}
-                            </div>
-                        </div>
-                    </motion.div>
+                    <ProjectCard key={i} p={p} />
                 ))}
             </div>
         </section>
