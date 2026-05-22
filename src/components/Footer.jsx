@@ -1,6 +1,13 @@
 export default function Footer() {
     return (
         <footer className="footer">
+            <div className="footer-stamp">
+                <span>BUILD/2026.05.21</span>
+                <span className="footer-stamp-dot">·</span>
+                <span>v3.0</span>
+                <span className="footer-stamp-dot">·</span>
+                <span>WATERLOO_ON</span>
+            </div>
             <div className="footer-links">
                 <a href="mailto:s296he@uwaterloo.ca">Email</a>
                 <a href="https://www.linkedin.com/in/shengyuan-he" target="_blank" rel="noopener noreferrer">LinkedIn</a>
