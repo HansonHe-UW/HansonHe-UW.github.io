@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - redesign # Since we are currently on the redesign branch
   workflow_dispatch: # Allows manual trigger
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
