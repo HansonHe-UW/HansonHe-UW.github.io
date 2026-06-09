@@ -10,7 +10,7 @@ export default function About() {
         <section id="about">
             <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }}>
                 <h2 className="section-title">About</h2>
-                <p className="about-text">
+                <p className="text-[1.05rem] text-fg-soft leading-[1.8] max-w-[600px]">
                     I'm an Electrical Engineering co-op student at the University of Waterloo,
                     based in Waterloo, ON. I'm passionate about building practical systems that
                     bridge hardware and software — from embedded devices to full-stack web applications

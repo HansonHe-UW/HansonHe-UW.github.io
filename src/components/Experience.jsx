@@ -30,31 +30,30 @@ export default function Experience() {
                 Experience
             </motion.h2>
 
-            <div className="experience-list">
+            <div className="flex flex-col gap-6 max-md:gap-0">
                 <motion.div
-                    className={`experience-card ${expanded ? 'is-expanded' : ''}`}
+                    className="p-6 border-l-2 border-line transition-colors duration-300 hover:border-l-accent max-md:py-7 max-md:px-0 max-md:border-l-0 max-md:border-t max-md:border-[var(--hairline)] max-md:first:border-t-0 max-md:first:pt-0 max-md:last:pb-0"
                     variants={fadeUp}
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, margin: '-60px' }}
                 >
-                    <div className="experience-header">
-                        <h3 className="experience-role">IT Support & Automation Intern</h3>
-                        <span className="experience-date">Apr 2025 — Jul 2025</span>
+                    <div className="flex justify-between items-start mb-1 gap-4 max-md:flex-col max-md:gap-2 max-md:items-stretch">
+                        <h3 className="text-[1.05rem] font-semibold text-fg">IT Support &amp; Automation Intern</h3>
+                        <span className="font-mono text-[0.72rem] text-fg-faint whitespace-nowrap tracking-[-0.01em] max-md:self-end max-md:-mt-1">Apr 2025 — Jul 2025</span>
                     </div>
-                    <p className="experience-company">
+                    <p className="text-[0.9rem] text-fg-soft mb-3">
                         Hunan Shengpeng Electric Power Technology Co., Ltd. — Changsha, China
                     </p>
 
                     <AnimatePresence initial={false}>
                         {expanded && (
                             <motion.ul
-                                className="experience-highlights experience-highlights-collapsible"
+                                className="bullet-list hidden max-md:block overflow-hidden"
                                 initial={{ height: 0, opacity: 0 }}
                                 animate={{ height: 'auto', opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
                                 transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
-                                style={{ overflow: 'hidden' }}
                             >
                                 {highlights.map((h, j) => (
                                     <li key={j}>{h}</li>
@@ -63,7 +62,7 @@ export default function Experience() {
                         )}
                     </AnimatePresence>
 
-                    <ul className="experience-highlights experience-highlights-always">
+                    <ul className="bullet-list block max-md:hidden">
                         {highlights.map((h, j) => (
                             <li key={j}>{h}</li>
                         ))}
@@ -71,13 +70,11 @@ export default function Experience() {
 
                     <button
                         type="button"
-                        className="experience-expand-btn project-expand-btn"
+                        className="expand-btn"
                         onClick={() => setExpanded((v) => !v)}
                         aria-expanded={expanded}
                     >
-                        {expanded
-                            ? `▴ COLLAPSE`
-                            : `▾ EXPAND_DETAILS [${bulletCount}]`}
+                        {expanded ? `▴ COLLAPSE` : `▾ EXPAND_DETAILS [${bulletCount}]`}
                     </button>
                 </motion.div>
             </div>

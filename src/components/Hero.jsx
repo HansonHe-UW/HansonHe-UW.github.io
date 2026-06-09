@@ -27,7 +27,7 @@ const DownloadIcon = () => (
 
 const HeroWatermark = () => (
     <svg
-        className="hero-watermark"
+        className="absolute right-[-6vw] top-1/2 -translate-y-1/2 w-[clamp(380px,55vw,720px)] max-md:w-[320px] max-md:right-[-8vw] h-auto text-fg opacity-[0.04] max-md:opacity-[0.05] light:opacity-[0.05] pointer-events-none z-0"
         viewBox="0 0 256 256"
         aria-hidden="true"
         focusable="false"
@@ -40,6 +40,8 @@ const HeroWatermark = () => (
 )
 
 const roles = ['Embedded Systems', 'Full-Stack Apps', 'Side Projects']
+
+const iconBtn = 'inline-flex items-center justify-center w-[42px] h-[42px] rounded-lg border border-line text-fg-soft bg-transparent transition-all duration-300 hover:text-accent hover:border-accent hover:bg-[var(--accent-glow)] [&_svg]:size-[18px]'
 
 export default function Hero() {
     const [currentRole, setCurrentRole] = useState('')
@@ -112,31 +114,41 @@ export default function Hero() {
     }
 
     return (
-        <section className="hero" id="hero" ref={heroRef}>
-            <div className="hero-glow-bg"></div>
+        <section
+            className="relative flex flex-col justify-center min-h-screen pt-[60px]"
+            id="hero"
+            ref={heroRef}
+        >
+            <div className="absolute w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] top-1/2 left-1/2 rounded-full z-0 pointer-events-none animate-pulse-glow bg-[radial-gradient(circle,rgba(99,102,241,0.15)_0%,rgba(99,102,241,0)_70%)]"></div>
             <HeroWatermark />
             <motion.div
                 variants={container}
                 initial="hidden"
                 animate="visible"
-                style={{ position: 'relative', zIndex: 1 }}
+                className="relative z-[1]"
             >
-                <motion.div className="hero-index" variants={item}>
-                    S/00 <span className="hero-index-arrow">▸</span> INDEX
+                <motion.div className="font-mono text-[0.7rem] tracking-[0.12em] uppercase text-fg-faint mb-5" variants={item}>
+                    S/00 <span className="text-accent mr-[0.15rem] ml-[0.05rem]">▸</span> INDEX
                 </motion.div>
-                <motion.p className="hero-greeting" variants={item}>Hi, I'm</motion.p>
-                <motion.h1 className="hero-name" variants={item}>
-                    Shengyuan <span className="accent">(Hanson)</span> He
+                <motion.p className="text-[0.9rem] text-fg-soft mb-2 font-normal" variants={item}>Hi, I'm</motion.p>
+                <motion.h1
+                    className="font-display text-[clamp(2.8rem,7.5vw,5rem)] max-md:text-[clamp(2.4rem,11vw,3.4rem)] max-md:break-words font-medium tracking-[-0.03em] leading-none mb-3"
+                    variants={item}
+                >
+                    Shengyuan <span className="text-accent italic font-medium">(Hanson)</span> He
                 </motion.h1>
-                <motion.div className="hero-typewriter" variants={item}>
-                    Building <span className="typewriter-text">{currentRole}</span><span className="cursor">|</span>
+                <motion.div
+                    className="text-[clamp(1.2rem,3vw,1.8rem)] max-md:text-[1.1rem] font-medium text-fg-soft mb-6 h-10 max-md:h-auto max-md:min-h-10 flex max-md:flex-wrap items-center"
+                    variants={item}
+                >
+                    Building <span className="text-fg ml-2 whitespace-nowrap">{currentRole}</span><span className="text-accent animate-blink ml-[2px]">|</span>
                 </motion.div>
-                <motion.p className="hero-tagline" variants={item}>
+                <motion.p className="text-[1.15rem] text-fg-soft max-w-[520px] leading-[1.6] mb-7" variants={item}>
                     Electrical Engineering student at the University of Waterloo.
                 </motion.p>
-                <motion.div className="hero-cta" variants={item}>
+                <motion.div className="flex items-center flex-wrap gap-[0.6rem] mb-6" variants={item}>
                     <motion.a
-                        className="hero-resume-btn"
+                        className="inline-flex items-center gap-[0.55rem] px-[1.1rem] h-[42px] rounded-lg bg-transparent text-fg text-[0.88rem] font-medium border border-line transition-all duration-300 cursor-pointer hover:text-accent hover:border-accent hover:bg-[var(--accent-glow)] [&_svg]:size-4 [&_svg]:shrink-0"
                         href="/resume-Hanson.pdf"
                         download="Hanson-He-Resume.pdf"
                         whileHover={{ y: -2 }}
@@ -145,7 +157,7 @@ export default function Hero() {
                         <DownloadIcon /> Resume
                     </motion.a>
                     <motion.a
-                        className="hero-icon-btn"
+                        className={iconBtn}
                         href="mailto:s296he@uwaterloo.ca"
                         aria-label="Email"
                         whileHover={{ y: -2 }}
@@ -154,7 +166,7 @@ export default function Hero() {
                         <MailIcon />
                     </motion.a>
                     <motion.a
-                        className="hero-icon-btn"
+                        className={iconBtn}
                         href="https://www.linkedin.com/in/shengyuan-he"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -165,7 +177,7 @@ export default function Hero() {
                         <LinkedInIcon />
                     </motion.a>
                     <motion.a
-                        className="hero-icon-btn"
+                        className={iconBtn}
                         href="https://github.com/HansonHe-UW"
                         target="_blank"
                         rel="noopener noreferrer"

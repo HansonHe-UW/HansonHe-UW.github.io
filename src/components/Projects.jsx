@@ -101,30 +101,30 @@ function ProjectCard({ p }) {
 
     return (
         <motion.div
-            className={`project-card ${expanded ? 'is-expanded' : ''}`}
+            className="group border border-line rounded-xl bg-card p-6 flex flex-col transition-all duration-300 shadow-[0_2px_12px_rgba(0,0,0,0.15)] hover:border-accent hover:bg-card-hover hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(99,102,241,0.1)] max-md:p-0 max-md:py-7 max-md:bg-transparent max-md:border-0 max-md:rounded-none max-md:shadow-none max-md:border-t max-md:border-[var(--hairline)] max-md:first:border-t-0 max-md:first:pt-0 max-md:last:pb-0 max-md:hover:bg-transparent max-md:hover:border-[var(--hairline)] max-md:hover:translate-y-0 max-md:hover:shadow-none"
             variants={cardVariant}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-60px' }}
         >
-            <div className="project-body">
-                <div className="project-header">
-                    <div className="project-header-main">
+            <div className="flex flex-col">
+                <div className="flex justify-between items-start mb-3 gap-4 max-md:flex-col max-md:gap-2 max-md:items-stretch">
+                    <div className="flex items-start gap-[0.9rem] min-w-0 flex-1">
                         {p.image && (
-                            <img src={p.image} alt={`${p.title} thumbnail`} className="project-thumb" />
+                            <img src={p.image} alt={`${p.title} thumbnail`} className="shrink-0 w-14 h-14 rounded-[14px] object-cover transition-transform duration-300 group-hover:scale-105 max-md:w-12 max-md:h-12" />
                         )}
-                        <div className="project-header-text">
-                            <div className="project-title-row">
-                                <div className="project-title">{p.title}</div>
+                        <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-[0.6rem]">
+                                <div className="text-[1.1rem] font-semibold text-fg">{p.title}</div>
                                 {p.links && p.links.length > 0 && (
-                                    <div className="project-links">
+                                    <div className="flex gap-[0.4rem] items-center">
                                         {p.links.map((link, k) => (
                                             <a
                                                 key={k}
                                                 href={link.href}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className="project-link-icon"
+                                                className="inline-flex items-center justify-center w-7 h-7 rounded-md text-fg-faint bg-transparent transition-all duration-300 hover:text-accent hover:bg-[var(--accent-glow)] [&_svg]:size-4"
                                                 title={link.label}
                                             >
                                                 {link.icon}
@@ -133,23 +133,22 @@ function ProjectCard({ p }) {
                                     </div>
                                 )}
                             </div>
-                            <div className="project-subtitle">{p.subtitle}</div>
+                            <div className="text-[0.85rem] text-fg-soft mb-1">{p.subtitle}</div>
                         </div>
                     </div>
-                    <span className="project-date">{p.date}</span>
+                    <span className="font-mono text-[0.72rem] text-fg-faint whitespace-nowrap tracking-[-0.01em] max-md:self-end max-md:-mt-1">{p.date}</span>
                 </div>
 
-                {p.award && <div className="project-award">{p.award}</div>}
+                {p.award && <div className="inline-flex items-center gap-[0.4rem] font-mono text-[0.72rem] text-fg-soft tracking-[-0.01em] mb-[0.85rem]">{p.award}</div>}
 
                 <AnimatePresence initial={false}>
                     {expanded && (
                         <motion.ul
-                            className="project-highlights project-highlights-collapsible"
+                            className="bullet-list hidden max-md:block mb-4 overflow-hidden"
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
-                            style={{ overflow: 'hidden' }}
                         >
                             {p.highlights.map((h, j) => (
                                 <li key={j}>{h}</li>
@@ -158,27 +157,25 @@ function ProjectCard({ p }) {
                     )}
                 </AnimatePresence>
 
-                <ul className="project-highlights project-highlights-always">
+                <ul className="bullet-list block max-md:hidden mb-4">
                     {p.highlights.map((h, j) => (
                         <li key={j}>{h}</li>
                     ))}
                 </ul>
 
-                <div className="project-tech">
+                <div className="flex gap-[0.4rem] flex-wrap mt-1">
                     {p.tech.map((t) => (
-                        <span key={t}>{t}</span>
+                        <span key={t} className="tag-bracket font-mono text-[0.72rem] text-fg-soft tracking-[-0.02em]">{t}</span>
                     ))}
                 </div>
 
                 <button
                     type="button"
-                    className="project-expand-btn"
+                    className="expand-btn"
                     onClick={() => setExpanded((v) => !v)}
                     aria-expanded={expanded}
                 >
-                    {expanded
-                        ? `▴ COLLAPSE`
-                        : `▾ EXPAND_DETAILS [${bulletCount}]`}
+                    {expanded ? `▴ COLLAPSE` : `▾ EXPAND_DETAILS [${bulletCount}]`}
                 </button>
             </div>
         </motion.div>
@@ -198,7 +195,7 @@ export default function Projects() {
                 Projects
             </motion.h2>
 
-            <div className="projects-list">
+            <div className="flex flex-col gap-6 max-md:gap-0">
                 {projects.map((p, i) => (
                     <ProjectCard key={i} p={p} />
                 ))}

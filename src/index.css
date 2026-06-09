@@ -1,4 +1,34 @@
-/* ===== CSS Reset & Variables ===== */
+@import "tailwindcss";
+
+/* ===== Tailwind theme tokens =====
+   Fonts live here (they don't change per theme) and also get emitted as
+   --font-* vars so any remaining hand-written CSS keeps resolving them. */
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+}
+
+/* Colors are mapped "inline" so the utilities emit var(--...) literally and
+   therefore follow the runtime [data-theme] switch defined below. */
+@theme inline {
+  --color-base: var(--bg-primary);
+  --color-surface: var(--bg-secondary);
+  --color-card: var(--bg-card);
+  --color-card-hover: var(--bg-card-hover);
+  --color-line: var(--border-color);
+  --color-line-strong: var(--border-hover);
+  --color-fg: var(--text-primary);
+  --color-fg-soft: var(--text-secondary);
+  --color-fg-faint: var(--text-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+}
+
+/* Light-mode override variant: `light:opacity-5` => :root[data-theme=light] & */
+@custom-variant light (:root[data-theme="light"] &);
+
+/* ===== Theme variables (source of truth, drives data-theme switching) ===== */
 :root {
   color-scheme: dark;
   --bg-primary: #0f1117;
@@ -22,9 +52,6 @@
   --body-gradient-1: rgba(99, 102, 241, 0.08);
   --body-gradient-2: rgba(99, 102, 241, 0.04);
   --hairline: rgba(232, 234, 240, 0.07);
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, Consolas, monospace;
-  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --max-width: 860px;
 }
@@ -55,65 +82,222 @@
   --dot-color: rgba(79, 70, 229, 0.08);
 }
 
-*,
-*::before,
-*::after {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* ===== Base =====
+   Must live in @layer base so Tailwind utilities (in the later @layer
+   utilities) can override these — otherwise an unlayered `* { margin: 0 }`
+   would beat every margin/padding utility regardless of specificity. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  section {
+    padding: 3.5rem 0;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg-primary);
+    background-image:
+      radial-gradient(circle at 1px 1px, var(--dot-color, rgba(99, 102, 241, 0.07)) 1px, transparent 0),
+      radial-gradient(ellipse 80% 60% at 50% 0%, var(--body-gradient-1) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 50% at 80% 50%, var(--body-gradient-2) 0%, transparent 50%);
+    background-size: 26px 26px, 100% 100%, 100% 100%;
+    background-attachment: fixed;
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: 15px;
+    overflow-x: hidden;
+    transition: background-color var(--transition), color var(--transition);
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color var(--transition);
+  }
+
+  a:hover {
+    color: var(--accent-hover);
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: white;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* ===== Keyframes (utilities can't express these) ===== */
+@keyframes pulse-glow {
+  0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
+  100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
 }
 
-body {
-  font-family: var(--font-sans);
-  background: var(--bg-primary);
-  background-image:
-    radial-gradient(circle at 1px 1px, var(--dot-color, rgba(99, 102, 241, 0.07)) 1px, transparent 0),
-    radial-gradient(ellipse 80% 60% at 50% 0%, var(--body-gradient-1) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 50% at 80% 50%, var(--body-gradient-2) 0%, transparent 50%);
-  background-size: 26px 26px, 100% 100%, 100% 100%;
-  background-attachment: fixed;
-  color: var(--text-primary);
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.animate-pulse-glow { animation: pulse-glow 8s ease-in-out infinite alternate; }
+.animate-blink { animation: blink 1s step-end infinite; }
+
+/* Monospace [bracket] wrapper used by skill / tech / footer tags */
+.tag-bracket::before { content: "["; color: var(--text-muted); margin-right: 0.05em; }
+.tag-bracket::after { content: "]"; color: var(--text-muted); margin-left: 0.05em; }
+
+/* Middot separator between inline children (coursework list) */
+.dot-sep > *:not(:last-child)::after {
+  content: "·";
+  margin-left: 0.65rem;
+  color: var(--text-muted);
+}
+
+/* "▸" bullet list used by project / experience highlights */
+.bullet-list {
+  list-style: none;
+}
+
+.bullet-list li {
+  position: relative;
+  padding-left: 1rem;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
   line-height: 1.7;
-  font-size: 15px;
-  overflow-x: hidden;
-  transition: background-color var(--transition), color var(--transition);
+  margin-bottom: 0.35rem;
 }
 
-a {
-  color: var(--accent);
-  text-decoration: none;
-  transition: color var(--transition);
+.bullet-list li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
 }
 
-a:hover {
-  color: var(--accent-hover);
-}
+/* ===== Reusable component classes (counters / pseudo-content can't be utilities) ===== */
+@layer components {
+  /* Section eyebrow: "S/01 ▸ TITLE" with an auto-incrementing counter */
+  .section-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.65rem;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.75rem;
+    counter-increment: section;
+    line-height: 1;
+  }
 
-::selection {
-  background: var(--accent);
-  color: white;
-}
+  .section-title::before {
+    content: "S/" counter(section, decimal-leading-zero) " \25B8";
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--text-muted);
+    text-transform: none;
+  }
 
-/* ===== Scrollbar ===== */
-::-webkit-scrollbar {
-  width: 6px;
-}
+  /* Mobile contact cards numbered "01 / 02 / 03" before the label */
+  .contact-counter {
+    counter-reset: contact;
+  }
 
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
+  @media (max-width: 768px) {
+    .contact-counter > * {
+      counter-increment: contact;
+    }
 
-::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 3px;
-}
+    .contact-label-counter::before {
+      content: "0" counter(contact) "  ";
+      color: var(--accent);
+      opacity: 0.7;
+    }
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
+  /* Mobile-only expand/collapse toggle for project & experience cards */
+  .expand-btn {
+    display: none;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    background: none;
+    border: 1px solid var(--hairline);
+    padding: 0.5rem 0.85rem;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 0.85rem;
+    align-self: flex-start;
+    transition: all var(--transition);
+  }
+
+  .expand-btn:hover {
+    background: var(--accent-glow);
+    border-color: var(--accent);
+  }
+
+  .expand-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 768px) {
+    .expand-btn {
+      display: inline-block;
+    }
+  }
+
+  /* Mobile menu numbered list: "01 About" */
+  .menu-counter {
+    counter-reset: m;
+  }
+
+  .menu-counter > li {
+    counter-increment: m;
+  }
+
+  .menu-counter a::before {
+    content: "0" counter(m);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: 0;
+  }
+
+  .menu-counter a.active::before {
+    color: var(--accent);
+    opacity: 0.7;
+  }
 }

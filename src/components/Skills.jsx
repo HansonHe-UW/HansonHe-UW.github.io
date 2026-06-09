@@ -24,13 +24,17 @@ export default function Skills() {
         <section id="skills">
             <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-100px' }} variants={container}>
                 <motion.h2 className="section-title" variants={row}>Skills</motion.h2>
-                <div className="skills-grid">
+                <div className="flex flex-col gap-[0.65rem] border-t border-[var(--hairline)] pt-2">
                     {skillData.map((cat) => (
-                        <motion.div className="skill-category" key={cat.label} variants={row}>
-                            <span className="skill-label">{cat.label}</span>
-                            <div className="skill-tags">
+                        <motion.div
+                            className="grid grid-cols-[130px_1fr] max-md:grid-cols-1 gap-4 max-md:gap-2 items-baseline py-[0.45rem] border-b border-[var(--hairline)]"
+                            key={cat.label}
+                            variants={row}
+                        >
+                            <span className="font-mono text-[0.7rem] font-medium uppercase tracking-[0.08em] text-fg-faint">{cat.label}</span>
+                            <div className="flex gap-x-[0.55rem] gap-y-[0.3rem] flex-wrap items-baseline">
                                 {cat.items.map((item) => (
-                                    <span className="skill-tag" key={item}>{item}</span>
+                                    <span className="tag-bracket font-mono text-[0.78rem] text-fg tracking-[-0.01em] transition-colors duration-300 hover:text-accent" key={item}>{item}</span>
                                 ))}
                             </div>
                         </motion.div>

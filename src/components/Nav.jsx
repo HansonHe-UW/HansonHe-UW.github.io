@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import ThemeToggle from './ThemeToggle'
 
 // Single source of truth for nav targets. TRACKED_IDS adds the hero so
@@ -12,7 +13,7 @@ const LogoMark = () => (
         viewBox="0 0 256 256"
         aria-hidden="true"
         focusable="false"
-        className="nav-logo-img"
+        className="w-9 h-9 block"
     >
         <g
             fontFamily="'Nimbus Roman', 'Liberation Serif', 'Times New Roman', serif"
@@ -37,6 +38,8 @@ const CloseIcon = () => (
 )
 
 const label = (s) => s.charAt(0).toUpperCase() + s.slice(1)
+
+const iconButton = 'bg-transparent border border-line text-fg-soft w-8 h-8 rounded-lg items-center justify-center cursor-pointer p-0 transition-all duration-300 hover:text-fg hover:border-line-strong hover:bg-[var(--logo-bg)]'
 
 export default function Nav() {
     const [scrolled, setScrolled] = useState(false)
@@ -100,18 +103,23 @@ export default function Nav() {
     }
 
     return (
-        <nav className={`nav ${scrolled ? 'scrolled' : ''}`}>
-            <div className="nav-inner">
-                <button type="button" className="nav-logo" onClick={() => go('hero')} aria-label="Scroll to top">
+        <nav className={`fixed top-0 left-0 right-0 z-[100] px-8 transition-[background,box-shadow] duration-300 ${scrolled ? 'bg-[var(--nav-bg)] backdrop-blur-[16px] shadow-[0_1px_0_var(--border-color)]' : ''}`}>
+            <div className="relative z-[100] max-w-[860px] mx-auto flex items-center justify-between h-[60px]">
+                <button
+                    type="button"
+                    className="bg-none border-0 p-0 cursor-pointer inline-flex items-center leading-[0] text-fg transition-[transform,color] duration-300 hover:scale-105 hover:text-accent focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-4 focus-visible:rounded-md"
+                    onClick={() => go('hero')}
+                    aria-label="Scroll to top"
+                >
                     <LogoMark />
                 </button>
-                <div className="nav-right">
-                    <ul className="nav-links">
+                <div className="flex items-center gap-6">
+                    <ul className="flex gap-8 list-none max-md:hidden">
                         {SECTIONS.map((s) => (
                             <li key={s}>
                                 <a
                                     href={`#${s}`}
-                                    className={activeSection === s ? 'active' : ''}
+                                    className={`text-[0.85rem] font-normal tracking-[0.02em] transition-colors duration-300 hover:text-fg ${activeSection === s ? 'text-fg' : 'text-fg-soft'}`}
                                     onClick={(e) => { e.preventDefault(); go(s) }}
                                 >
                                     {label(s)}
@@ -122,7 +130,7 @@ export default function Nav() {
                     <ThemeToggle />
                     <button
                         type="button"
-                        className="nav-burger"
+                        className={`hidden max-md:inline-flex [&_svg]:size-[17px] ${iconButton}`}
                         onClick={() => setMenuOpen((v) => !v)}
                         aria-label={menuOpen ? 'Close menu' : 'Open menu'}
                         aria-expanded={menuOpen}
@@ -133,18 +141,19 @@ export default function Nav() {
                 </div>
             </div>
 
-            <AnimatePresence>
-                {menuOpen && (
-                    <motion.div
-                        id="mobile-menu"
-                        className="mobile-menu"
+            {createPortal(
+                <AnimatePresence>
+                    {menuOpen && (
+                        <motion.div
+                            id="mobile-menu"
+                        className="fixed inset-0 z-[90] flex flex-col justify-center pt-[60px] px-6 pb-12 bg-base [background-image:radial-gradient(ellipse_80%_50%_at_50%_0%,var(--body-gradient-1)_0%,transparent_55%)]"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                     >
                         <motion.ol
-                            className="mobile-menu-list"
+                            className="menu-counter list-none flex flex-col gap-[0.35rem]"
                             initial="hidden"
                             animate="visible"
                             variants={{ visible: { transition: { staggerChildren: 0.05, delayChildren: 0.08 } } }}
@@ -156,7 +165,7 @@ export default function Nav() {
                                 >
                                     <a
                                         href={`#${s}`}
-                                        className={activeSection === s ? 'active' : ''}
+                                        className={`flex items-baseline gap-[0.85rem] py-2 font-display text-[clamp(1.8rem,9vw,2.4rem)] font-medium tracking-[-0.02em] transition-colors duration-300 ${activeSection === s ? 'active text-accent' : 'text-fg'}`}
                                         onClick={(e) => { e.preventDefault(); go(s) }}
                                     >
                                         {label(s)}
@@ -165,8 +174,10 @@ export default function Nav() {
                             ))}
                         </motion.ol>
                     </motion.div>
-                )}
-            </AnimatePresence>
+                    )}
+                </AnimatePresence>,
+                document.body
+            )}
         </nav>
     )
 }

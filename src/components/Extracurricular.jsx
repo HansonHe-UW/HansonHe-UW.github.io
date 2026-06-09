@@ -38,25 +38,29 @@ export default function Extracurricular() {
                 Extracurricular
             </motion.h2>
 
-            <div className="experience-list">
+            <div className="flex flex-col gap-6 max-md:gap-0">
                 {activities.map((a) => (
                     <motion.div
                         key={a.role + a.org}
-                        className="experience-card experience-card-with-logo"
+                        className="flex items-start gap-5 p-6 border-l-2 border-line transition-colors duration-300 hover:border-l-accent max-md:py-7 max-md:px-0 max-md:border-l-0 max-md:border-t max-md:border-[var(--hairline)] max-md:first:border-t-0 max-md:first:pt-0 max-md:last:pb-0"
                         variants={fadeUp}
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, margin: '-60px' }}
                     >
-                        <img src={a.logo} alt={a.org} className="experience-logo" />
-                        <div className="experience-body">
-                            <div className="experience-header">
-                                <h3 className="experience-role">{a.role}</h3>
-                                {a.date && <span className="experience-date">{a.date}</span>}
+                        <img
+                            src={a.logo}
+                            alt={a.org}
+                            className="w-[52px] h-[52px] rounded-[10px] object-contain bg-[var(--logo-bg)] p-[6px] border border-line shrink-0 transition-all duration-300 hover:border-accent hover:bg-[var(--logo-bg-hover)] hover:scale-105"
+                        />
+                        <div className="flex-1 min-w-0">
+                            <div className="flex justify-between items-start mb-1 gap-4 max-md:flex-col max-md:gap-2 max-md:items-stretch">
+                                <h3 className="text-[1.05rem] font-semibold text-fg">{a.role}</h3>
+                                {a.date && <span className="font-mono text-[0.72rem] text-fg-faint whitespace-nowrap tracking-[-0.01em] max-md:self-end max-md:-mt-1">{a.date}</span>}
                             </div>
-                            <p className="experience-company">{a.org}</p>
+                            <p className="text-[0.9rem] text-fg-soft mb-3">{a.org}</p>
                             {a.highlights.length > 0 && (
-                                <ul className="experience-highlights">
+                                <ul className="bullet-list">
                                     {a.highlights.map((h, j) => (
                                         <li key={j}>{h}</li>
                                     ))}

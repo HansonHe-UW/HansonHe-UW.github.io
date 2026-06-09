@@ -1,4 +1,3 @@
-import './App.css'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -15,7 +14,7 @@ export default function App() {
     return (
         <>
             <Nav />
-            <div className="main-content">
+            <div className="max-w-[860px] mx-auto px-8 max-md:px-5 overflow-x-hidden [counter-reset:section]">
                 <Hero />
                 <About />
                 <Education />

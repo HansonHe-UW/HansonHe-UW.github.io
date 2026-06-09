@@ -72,7 +72,7 @@ export default function ThemeToggle() {
 
     return (
         <button
-            className="theme-toggle"
+            className="bg-transparent border border-line text-fg-soft w-8 h-8 rounded-lg inline-flex items-center justify-center cursor-pointer p-0 transition-all duration-300 [&_svg]:size-[15px] hover:text-fg hover:border-line-strong hover:bg-[var(--logo-bg)]"
             onClick={toggle}
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
