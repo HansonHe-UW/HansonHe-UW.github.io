@@ -48,20 +48,23 @@ export default function Nav() {
     const burgerRef = useRef(null)
     const firstLinkRef = useRef(null)
 
-    // Deep links: jump to the #section after sections render. Two passes because
-    // the hero's height shrinks on scroll, which moves the target after the first
-    // jump; it settles at 55vh, so the second pass lands precisely.
+    // Deep links: on a fresh load with a #section, jump to it once sections
+    // render. On reload the browser restores the prior scroll position, so we
+    // only jump when it didn't (page still at the top). Two passes because the
+    // hero shrinks on scroll, nudging the target; it settles at 55vh, so the
+    // second pass lands precisely.
     useEffect(() => {
         const hash = window.location.hash.slice(1)
         if (!hash) return
-        // Own the initial scroll for deep links only — normal (no-hash) reloads
-        // keep the browser's native scroll restore (more precise than us).
-        if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
         const el = document.getElementById(hash)
         if (!el) return
-        el.scrollIntoView({ behavior: 'instant' })
-        const t = setTimeout(() => el.scrollIntoView({ behavior: 'instant' }), 80)
-        return () => clearTimeout(t)
+        let t
+        const raf = requestAnimationFrame(() => {
+            if (window.scrollY > 10) return
+            el.scrollIntoView({ behavior: 'instant' })
+            t = setTimeout(() => el.scrollIntoView({ behavior: 'instant' }), 80)
+        })
+        return () => { cancelAnimationFrame(raf); clearTimeout(t) }
     }, [])
 
     useEffect(() => {
@@ -83,17 +86,6 @@ export default function Nav() {
             }
 
             setActiveSection(activeId)
-
-            // Keep the URL hash in sync with what's on screen so a shared/reloaded
-            // link always matches the visible section (hero clears the hash).
-            const desiredHash = activeId === 'hero' ? '' : `#${activeId}`
-            if (window.location.hash !== desiredHash) {
-                // Safari throttles history updates (~100/30s); ignore the rare
-                // SecurityError — the hash just lags until the next scroll.
-                try {
-                    window.history.replaceState(null, '', desiredHash || window.location.pathname + window.location.search)
-                } catch { /* rate-limited */ }
-            }
         }
 
         window.addEventListener('scroll', handleScroll, { passive: true })
@@ -139,6 +131,10 @@ export default function Nav() {
     const go = (id) => {
         setMenuOpen(false)
         scrollTo(id)
+        // Reflect the clicked section in the URL so it's shareable; plain
+        // scrolling leaves the URL alone. The logo (hero) clears the hash.
+        const url = id === 'hero' ? window.location.pathname + window.location.search : `#${id}`
+        window.history.replaceState(null, '', url)
     }
 
     return (
