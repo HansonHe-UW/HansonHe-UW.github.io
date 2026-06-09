@@ -1,4 +1,4 @@
-const stack = ['React', 'Vite', 'Framer Motion', 'JetBrains Mono']
+const stack = ['React', 'Vite', 'Tailwind CSS', 'Framer Motion', 'JetBrains Mono']
 
 export default function Footer() {
     return (
