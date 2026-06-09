@@ -17,7 +17,7 @@ export default function Awards() {
                             University of Waterloo — Awarded for academic excellence (admission average 90%–94.9%)
                         </div>
                     </div>
-                    <span className="font-mono text-[0.72rem] text-fg-faint whitespace-nowrap tracking-[-0.01em] max-md:self-end max-md:-mt-1">June 2025</span>
+                    <span className="font-mono text-[0.72rem] text-fg-faint whitespace-nowrap tracking-[-0.01em] max-md:self-end max-md:-mt-1">Jun 2025</span>
                 </div>
             </motion.div>
         </section>

@@ -12,7 +12,7 @@
 /* Colors are mapped "inline" so the utilities emit var(--...) literally and
    therefore follow the runtime [data-theme] switch defined below. */
 @theme inline {
-  --color-base: var(--bg-primary);
+  --color-page: var(--bg-primary);
   --color-surface: var(--bg-secondary);
   --color-card: var(--bg-card);
   --color-card-hover: var(--bg-card-hover);
@@ -299,5 +299,22 @@
   .menu-counter a.active::before {
     color: var(--accent);
     opacity: 0.7;
+  }
+}
+
+/* ===== Respect "reduce motion" — neutralize animations/transitions/smooth scroll =====
+   Framer-motion entrance/hover is handled separately via <MotionConfig reducedMotion>;
+   the JS typewriter + hero scroll-shrink are gated with useReducedMotion in Hero.jsx. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

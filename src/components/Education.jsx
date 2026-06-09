@@ -12,7 +12,7 @@ export default function Education() {
                 <h2 className="section-title">Education</h2>
 
                 <article className="flex items-start gap-6 max-md:gap-4">
-                    <picture className="shrink-0 block w-[140px] max-md:w-[90px] leading-[0] -ml-8 max-md:ml-0 max-md:mt-2">
+                    <span className="shrink-0 block w-[140px] max-md:w-[90px] leading-[0] -ml-8 max-md:ml-0 max-md:mt-2">
                         <img
                             src="/logos/waterloo-eng-vert-dark.png"
                             alt="University of Waterloo, Faculty of Engineering"
@@ -24,7 +24,7 @@ export default function Education() {
                             aria-hidden="true"
                             className="w-full h-auto hidden light:block"
                         />
-                    </picture>
+                    </span>
                     <div className="flex-1 min-w-0">
                         <div className="flex flex-wrap items-baseline gap-y-[0.45rem] gap-x-[0.75rem] max-md:flex-col max-md:items-start max-md:gap-[0.3rem]">
                             <span className="font-display italic font-medium text-[1.15rem] max-md:text-[1.05rem] text-fg tracking-[-0.01em] leading-[1.3]">BASc Honours, Electrical Engineering — Co-op</span>

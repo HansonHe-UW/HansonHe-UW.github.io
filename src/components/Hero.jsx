@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useState, useEffect, useRef } from 'react'
 
 const MailIcon = () => (
@@ -49,10 +49,17 @@ export default function Hero() {
     const [loopNum, setLoopNum] = useState(0)
     const [typingSpeed, setTypingSpeed] = useState(150)
     const heroRef = useRef(null)
+    const prefersReducedMotion = useReducedMotion()
 
     useEffect(() => {
         const hero = heroRef.current
         if (!hero) return
+
+        // Reduced motion: skip the scroll-driven shrink, keep a stable height.
+        if (prefersReducedMotion) {
+            hero.style.minHeight = ''
+            return
+        }
 
         let ticking = false
         const update = () => {
@@ -72,9 +79,12 @@ export default function Hero() {
         update()
         window.addEventListener('scroll', handler, { passive: true })
         return () => window.removeEventListener('scroll', handler)
-    }, [])
+    }, [prefersReducedMotion])
 
     useEffect(() => {
+        // Reduced motion: skip the typing loop (a static role is rendered below).
+        if (prefersReducedMotion) return
+
         let pauseTimer
         const timer = setTimeout(() => {
             const i = loopNum % roles.length
@@ -101,7 +111,7 @@ export default function Hero() {
             clearTimeout(timer)
             if (pauseTimer) clearTimeout(pauseTimer)
         }
-    }, [currentRole, isDeleting, loopNum, typingSpeed])
+    }, [currentRole, isDeleting, loopNum, typingSpeed, prefersReducedMotion])
 
     const container = {
         hidden: {},
@@ -119,7 +129,7 @@ export default function Hero() {
             id="hero"
             ref={heroRef}
         >
-            <div className="absolute w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] top-1/2 left-1/2 rounded-full z-0 pointer-events-none animate-pulse-glow bg-[radial-gradient(circle,rgba(99,102,241,0.15)_0%,rgba(99,102,241,0)_70%)]"></div>
+            <div className="absolute w-[60vw] h-[60vw] max-w-[600px] max-h-[600px] top-1/2 left-1/2 [transform:translate(-50%,-50%)] rounded-full z-0 pointer-events-none animate-pulse-glow bg-[radial-gradient(circle,rgba(99,102,241,0.15)_0%,rgba(99,102,241,0)_70%)]"></div>
             <HeroWatermark />
             <motion.div
                 variants={container}
@@ -141,7 +151,10 @@ export default function Hero() {
                     className="text-[clamp(1.2rem,3vw,1.8rem)] max-md:text-[1.1rem] font-medium text-fg-soft mb-6 h-10 max-md:h-auto max-md:min-h-10 flex max-md:flex-wrap items-center"
                     variants={item}
                 >
-                    Building <span className="text-fg ml-2 whitespace-nowrap">{currentRole}</span><span className="text-accent animate-blink ml-[2px]">|</span>
+                    Building{' '}
+                    <span className="text-fg ml-2 whitespace-nowrap" aria-hidden="true">{prefersReducedMotion ? roles[0] : currentRole}</span>
+                    <span className="text-accent animate-blink ml-[2px]" aria-hidden="true">|</span>
+                    <span className="sr-only">{roles.join(', ')}</span>
                 </motion.div>
                 <motion.p className="text-[1.15rem] text-fg-soft max-w-[520px] leading-[1.6] mb-7" variants={item}>
                     Electrical Engineering student at the University of Waterloo.

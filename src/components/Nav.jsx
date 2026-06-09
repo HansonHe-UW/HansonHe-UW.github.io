@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import ThemeToggle from './ThemeToggle'
 
@@ -16,8 +16,8 @@ const LogoMark = () => (
         className="w-9 h-9 block"
     >
         <g
-            fontFamily="'Nimbus Roman', 'Liberation Serif', 'Times New Roman', serif"
-            fontWeight="400"
+            fontFamily="'Fraunces', Georgia, serif"
+            fontWeight="500"
         >
             <text x="108" y="172" fontSize="124" fill="none" stroke="currentColor" strokeWidth="2.2" paintOrder="stroke fill">H</text>
             <text x="48" y="172" fontSize="124" fill="currentColor">S</text>
@@ -45,6 +45,24 @@ export default function Nav() {
     const [scrolled, setScrolled] = useState(false)
     const [activeSection, setActiveSection] = useState('')
     const [menuOpen, setMenuOpen] = useState(false)
+    const burgerRef = useRef(null)
+    const firstLinkRef = useRef(null)
+
+    // Deep links: jump to the #section after sections render. Two passes because
+    // the hero's height shrinks on scroll, which moves the target after the first
+    // jump; it settles at 55vh, so the second pass lands precisely.
+    useEffect(() => {
+        const hash = window.location.hash.slice(1)
+        if (!hash) return
+        // Own the initial scroll for deep links only — normal (no-hash) reloads
+        // keep the browser's native scroll restore (more precise than us).
+        if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual'
+        const el = document.getElementById(hash)
+        if (!el) return
+        el.scrollIntoView({ behavior: 'instant' })
+        const t = setTimeout(() => el.scrollIntoView({ behavior: 'instant' }), 80)
+        return () => clearTimeout(t)
+    }, [])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -65,6 +83,17 @@ export default function Nav() {
             }
 
             setActiveSection(activeId)
+
+            // Keep the URL hash in sync with what's on screen so a shared/reloaded
+            // link always matches the visible section (hero clears the hash).
+            const desiredHash = activeId === 'hero' ? '' : `#${activeId}`
+            if (window.location.hash !== desiredHash) {
+                // Safari throttles history updates (~100/30s); ignore the rare
+                // SecurityError — the hash just lags until the next scroll.
+                try {
+                    window.history.replaceState(null, '', desiredHash || window.location.pathname + window.location.search)
+                } catch { /* rate-limited */ }
+            }
         }
 
         window.addEventListener('scroll', handleScroll, { passive: true })
@@ -85,16 +114,26 @@ export default function Nav() {
         window.addEventListener('keydown', onKey)
         window.addEventListener('resize', onResize)
 
+        // Move focus into the menu so keyboard/screen-reader users don't tab
+        // through the page content hidden behind it.
+        const burger = burgerRef.current
+        firstLinkRef.current?.focus()
+
         return () => {
             document.body.style.overflow = ''
             window.removeEventListener('keydown', onKey)
             window.removeEventListener('resize', onResize)
+            // Return focus to the toggle — unless it's hidden (viewport widened
+            // past the breakpoint while open), in which case leave focus alone.
+            if (burger?.offsetParent !== null) burger?.focus()
         }
     }, [menuOpen])
 
+    // No behavior arg: lets CSS scroll-behavior decide, so the reduced-motion
+    // override (scroll-behavior: auto) actually applies to nav-click scrolling.
     const scrollTo = (id) => {
         const el = document.getElementById(id)
-        if (el) el.scrollIntoView({ behavior: 'smooth' })
+        if (el) el.scrollIntoView()
     }
 
     const go = (id) => {
@@ -129,6 +168,7 @@ export default function Nav() {
                     </ul>
                     <ThemeToggle />
                     <button
+                        ref={burgerRef}
                         type="button"
                         className={`hidden max-md:inline-flex [&_svg]:size-[17px] ${iconButton}`}
                         onClick={() => setMenuOpen((v) => !v)}
@@ -146,7 +186,7 @@ export default function Nav() {
                     {menuOpen && (
                         <motion.div
                             id="mobile-menu"
-                        className="fixed inset-0 z-[90] overflow-y-auto bg-base [background-image:radial-gradient(ellipse_80%_50%_at_50%_0%,var(--body-gradient-1)_0%,transparent_55%)]"
+                        className="fixed inset-0 z-[90] overflow-y-auto bg-page [background-image:radial-gradient(ellipse_80%_50%_at_50%_0%,var(--body-gradient-1)_0%,transparent_55%)]"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
@@ -159,14 +199,15 @@ export default function Nav() {
                                 animate="visible"
                                 variants={{ visible: { transition: { staggerChildren: 0.05, delayChildren: 0.08 } } }}
                             >
-                                {SECTIONS.map((s) => (
+                                {SECTIONS.map((s, i) => (
                                     <motion.li
                                         key={s}
                                         variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
                                     >
                                         <a
+                                            ref={i === 0 ? firstLinkRef : null}
                                             href={`#${s}`}
-                                            className={`flex items-baseline gap-[0.85rem] py-2 font-display text-[clamp(1.8rem,9vw,2.4rem)] font-medium tracking-[-0.02em] transition-colors duration-300 ${activeSection === s ? 'active text-accent' : 'text-fg'}`}
+                                            className={`flex items-baseline gap-[0.7rem] py-[0.4rem] font-display text-[clamp(1.35rem,5.5vw,1.7rem)] font-medium tracking-[-0.01em] transition-colors duration-300 ${activeSection === s ? 'active text-accent' : 'text-fg'}`}
                                             onClick={(e) => { e.preventDefault(); go(s) }}
                                         >
                                             {label(s)}
