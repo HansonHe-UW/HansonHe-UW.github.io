@@ -146,33 +146,35 @@ export default function Nav() {
                     {menuOpen && (
                         <motion.div
                             id="mobile-menu"
-                        className="fixed inset-0 z-[90] flex flex-col justify-center pt-[60px] px-6 pb-12 bg-base [background-image:radial-gradient(ellipse_80%_50%_at_50%_0%,var(--body-gradient-1)_0%,transparent_55%)]"
+                        className="fixed inset-0 z-[90] overflow-y-auto bg-base [background-image:radial-gradient(ellipse_80%_50%_at_50%_0%,var(--body-gradient-1)_0%,transparent_55%)]"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
                     >
-                        <motion.ol
-                            className="menu-counter list-none flex flex-col gap-[0.35rem]"
-                            initial="hidden"
-                            animate="visible"
-                            variants={{ visible: { transition: { staggerChildren: 0.05, delayChildren: 0.08 } } }}
-                        >
-                            {SECTIONS.map((s) => (
-                                <motion.li
-                                    key={s}
-                                    variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
-                                >
-                                    <a
-                                        href={`#${s}`}
-                                        className={`flex items-baseline gap-[0.85rem] py-2 font-display text-[clamp(1.8rem,9vw,2.4rem)] font-medium tracking-[-0.02em] transition-colors duration-300 ${activeSection === s ? 'active text-accent' : 'text-fg'}`}
-                                        onClick={(e) => { e.preventDefault(); go(s) }}
+                        <div className="min-h-full flex flex-col justify-center pt-[60px] px-6 pb-12">
+                            <motion.ol
+                                className="menu-counter list-none flex flex-col gap-[0.35rem]"
+                                initial="hidden"
+                                animate="visible"
+                                variants={{ visible: { transition: { staggerChildren: 0.05, delayChildren: 0.08 } } }}
+                            >
+                                {SECTIONS.map((s) => (
+                                    <motion.li
+                                        key={s}
+                                        variants={{ hidden: { opacity: 0, x: -20 }, visible: { opacity: 1, x: 0 } }}
                                     >
-                                        {label(s)}
-                                    </a>
-                                </motion.li>
-                            ))}
-                        </motion.ol>
+                                        <a
+                                            href={`#${s}`}
+                                            className={`flex items-baseline gap-[0.85rem] py-2 font-display text-[clamp(1.8rem,9vw,2.4rem)] font-medium tracking-[-0.02em] transition-colors duration-300 ${activeSection === s ? 'active text-accent' : 'text-fg'}`}
+                                            onClick={(e) => { e.preventDefault(); go(s) }}
+                                        >
+                                            {label(s)}
+                                        </a>
+                                    </motion.li>
+                                ))}
+                            </motion.ol>
+                        </div>
                     </motion.div>
                     )}
                 </AnimatePresence>,
